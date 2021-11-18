@@ -29,7 +29,7 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public List<BoardDto> list(QnaParameterDto qnaParameterDto) throws Exception {
+	public List<QnaDto> list(QnaParameterDto qnaParameterDto) throws Exception {
 		int start = qnaParameterDto.getPg() == 0 ? 0 : (qnaParameterDto.getPg() - 1) * qnaParameterDto.getSpp();
 		qnaParameterDto.setStart(start);
 		return sqlSession.getMapper(QnaMapper.class).list(qnaParameterDto);
@@ -82,6 +82,11 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public boolean deleteAnswer(int answerno) throws Exception {
 		return sqlSession.getMapper(QnaMapper.class).deleteAnswer(answerno);
+	}
+
+	@Override
+	public AnswerDto getAnswer(int answerno) throws Exception {
+		return sqlSession.getMapper(QnaMapper.class).getAnswer(answerno);
 	}
 	
 

@@ -16,4 +16,25 @@
 		where userid = #{userid}
 	</select>
 	
+	<insert id="join" parameterType="memberDto">
+		insert into ssafy_member (userid, username, userpwd, email, joindate)
+		values (#{userid}, #{username}, #{userpwd}, #{email}, now())
+	</insert>
+	
+	<update id="userModify" parameterType="memberDto">
+		update ssafy_member
+		set userpwd = #{userpwd}, email = #{email}, username = #{username}
+		where userid = #{userid}
+	</update>
+	
+	<delete id="userDelete" parameterType="String">
+		delete from ssafy_member
+		where userid = #{userid}
+	</delete>
+	
+	<select id="userList" resultType="memberDto">
+		select username, userid, email, joindate
+		from ssafy_member
+	</select>
+	
 </mapper>

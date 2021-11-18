@@ -1,5 +1,7 @@
 package com.ssafy.vue.model.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +27,23 @@ public class MemberServiceImpl implements MemberService {
 		return sqlSession.getMapper(MemberMapper.class).userInfo(userid);
 	}
 
+	@Override
+	public boolean join(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).join(memberDto);
+	}
+
+	@Override
+	public boolean userDelete(String userid) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).userDelete(userid);
+	}
+
+	@Override
+	public boolean userModify(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).userModify(memberDto);
+	}
+
+	@Override
+	public List<MemberDto> userList() throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).userList();
+	}
 }

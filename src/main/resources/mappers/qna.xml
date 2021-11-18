@@ -70,6 +70,12 @@
 		where qnano = #{qnano}
 	</update>
 	
+	<select id="getAnswer" parameterType="int" resultType="answerDto">
+		select answerno, qnano, userid, content, regtime
+		from answer
+		where answerno = #{answerno}
+	</select>
+	
 	
 	
 
