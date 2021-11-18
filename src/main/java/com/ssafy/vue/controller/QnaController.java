@@ -100,6 +100,27 @@ public class QnaController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "답변 수정", notes = "새로운 답변 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/answer")
+	public ResponseEntity<String> modifyAnswer(@RequestBody @ApiParam(value = "수정할 답변정보.", required = true) AnswerDto answerDto) throws Exception {
+		logger.info("modifyAnswer - 호출");
+		
+		if (qnaService.modifyAnswer(answerDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "답변 삭제", notes = "답변 번호에 해당하는 답변의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/answer/{answerno}")
+	public ResponseEntity<String> deleteAnswer(@PathVariable("answerno") @ApiParam(value = "삭제할 답변의 번호.", required = true) int answerno) throws Exception {
+		logger.info("deleteAnswer - 호출");
+		if (qnaService.deleteAnswer(answerno)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 	
 
 }

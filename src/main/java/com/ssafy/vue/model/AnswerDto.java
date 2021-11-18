@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "AnswerDto : 게시글정보", description = "QnA 답변의 상세 정보를 나타낸다.")
 public class AnswerDto {
+	@ApiModelProperty(value = "answer 번호")
+	private int answerno;
 	@ApiModelProperty(value = "qna번호")
 	private int qnano;
 	@ApiModelProperty(value = "작성자 아이디")
@@ -14,6 +16,13 @@ public class AnswerDto {
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
 	
+	
+	public int getAnswerno() {
+		return answerno;
+	}
+	public void setAnswerno(int answerno) {
+		this.answerno = answerno;
+	}
 	public int getQnano() {
 		return qnano;
 	}

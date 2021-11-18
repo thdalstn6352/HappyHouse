@@ -38,7 +38,7 @@
 	</delete>
 	
 	<select id="listAnswer" parameterType="int" resultType="answerDto">
-		select qnano, userid, content, regtime,
+		select answerno, qnano, userid, content, regtime,
 				case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
 				then date_format(regtime, '%H:%i:%s')
 				else date_format(regtime, '%y.%m.%d')
@@ -53,11 +53,24 @@
 		values (#{qnano}, #{userid}, #{content}, now())
 	</insert>
 	
+	<update id="modifyAnswer" parameterType="answerDto">
+		update answer
+		set content = #{content}
+		where answerno = #{answerno}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="int">
+		delete from answer
+		where answerno = #{answerno}
+	</delete>
+	
 	<update id="updateAnswered" parameterType="int">
 		update qna
 		set answered = true
 		where qnano = #{qnano}
 	</update>
+	
+	
 	
 
 </mapper>

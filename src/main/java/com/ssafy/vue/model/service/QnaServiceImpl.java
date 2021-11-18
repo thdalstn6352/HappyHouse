@@ -73,6 +73,16 @@ public class QnaServiceImpl implements QnaService {
 		}
 		return sqlSession.getMapper(QnaMapper.class).writeAnswer(answerDto);
 	}
+
+	@Override
+	public boolean modifyAnswer(AnswerDto answerDto) throws Exception {
+		return sqlSession.getMapper(QnaMapper.class).modifyAnswer(answerDto);
+	}
+
+	@Override
+	public boolean deleteAnswer(int answerno) throws Exception {
+		return sqlSession.getMapper(QnaMapper.class).deleteAnswer(answerno);
+	}
 	
 
 }
