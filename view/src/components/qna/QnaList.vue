@@ -40,7 +40,7 @@
       v-model="currentPage"
       :total-rows="totalCount"
       align="center"
-      :per-page="perPage"
+      :per-page="this.perPage"
       @page-click="pageClick"
     >
     </b-pagination>
@@ -68,7 +68,7 @@ export default {
   computed: {
     ...mapGetters(qnaStore, [
       "qnas",
-      "pageNav",
+      // "pageNav",
       "totalCount",
       "getCurrentPage",
     ]),
@@ -80,6 +80,7 @@ export default {
   methods: {
     ...mapActions(qnaStore, ["getQnas"]),
     pageClick: function (button, page) {
+      console.log(page);
       this.currentPage = page;
       this.getQnas({ pg: this.currentPage, spp: 10 });
     },

@@ -9,7 +9,7 @@
       <b-col class="text-left">
         <b-button variant="outline-primary" @click="listArticle">목록</b-button>
       </b-col>
-      <b-col class="text-right">
+      <b-col v-if="qna.userid === userInfo.userid" class="text-right">
         <b-button
           variant="outline-info"
           size="sm"
@@ -44,9 +44,10 @@
 import QnaViewDetail from "@/components/qna/child/QnaViewDetail";
 import CommentWrite from "@/components/qna/child/comment/CommentWrite";
 import Comment from "@/components/qna/child/comment/Comment";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 const qnaStore = "qnaStore";
+const memberStore = "memberStore";
 
 export default {
   data() {
@@ -63,6 +64,7 @@ export default {
   },
   computed: {
     ...mapGetters(qnaStore, ["qna", "comments"]),
+    ...mapState(memberStore, ["userInfo"]),
     message() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");
@@ -78,9 +80,8 @@ export default {
     this.qnano = parseInt(this.$route.params.qnano);
     this.getQna(this.qnano);
     this.getComments(this.qnano);
-
-    // this.$store.dispatch("getQna", `/qna/${this.qnano}`);
-    // this.$store.dispatch("getComments", `/qna/answer/${this.qnano}`);
+    console.log(this.qna);
+    console.log(this.userInfo);
   },
   methods: {
     ...mapActions(qnaStore, ["getQna", "getComments"]),

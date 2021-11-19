@@ -63,10 +63,11 @@ const qnaStore = {
       getQnas(
         param,
         ({ data }) => {
+          console.log(data);
           commit("setTotalRows", data.pageNav.totalCount);
           commit("setQnas", data.list);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -77,7 +78,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setQna", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -89,7 +90,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setQna", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -106,7 +107,7 @@ const qnaStore = {
           }
           alert(msg);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -122,7 +123,7 @@ const qnaStore = {
           }
           alert(msg);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -134,7 +135,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setComments", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -151,12 +152,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            (error) => {
+            error => {
               console.log(error);
             }
           );
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -172,12 +173,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            (error) => {
+            error => {
               console.log(error);
             }
           );
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -197,12 +198,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            (error) => {
+            error => {
               console.log(error);
             }
           );
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );

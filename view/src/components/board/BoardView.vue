@@ -9,7 +9,10 @@
       <b-col class="text-left">
         <b-button variant="outline-primary" @click="listArticle">목록</b-button>
       </b-col>
-      <b-col class="text-right">
+      <b-col
+        v-if="userInfo !== null && article.userid === userInfo.userid"
+        class="text-right"
+      >
         <b-button
           variant="outline-info"
           size="sm"
@@ -43,9 +46,10 @@
 <script>
 // import moment from "moment";
 // import http from "@/util/http-common";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 const boardStore = "boardStore";
+const memberStore = "memberStore";
 
 export default {
   data() {
@@ -55,6 +59,7 @@ export default {
   },
   computed: {
     ...mapGetters(boardStore, ["article"]),
+    ...mapState(memberStore, ["userInfo"]),
     message() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");

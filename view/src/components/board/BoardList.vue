@@ -2,10 +2,10 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+        <b-alert show><h3>공지사항</h3></b-alert>
       </b-col>
     </b-row>
-    <b-row class="mb-1">
+    <b-row v-if="userInfo !== null && userInfo.userid === `admin`" class="mb-1">
       <b-col class="text-right">
         <b-button variant="outline-primary" @click="moveWrite()"
           >글쓰기</b-button
@@ -50,9 +50,10 @@
 <script>
 // import http from "@/util/http-common";
 import BoardListRow from "@/components/board/child/BoardListRow";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 const boardStore = "boardStore";
+const memberStore = "memberStore";
 
 export default {
   name: "BoardList",
@@ -72,10 +73,11 @@ export default {
   computed: {
     ...mapGetters(boardStore, [
       "articles",
-      "pageNav",
+      // "pageNav",
       "totalCount",
       "getCurrentPage",
     ]),
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     ...mapActions(boardStore, ["getArticles"]),

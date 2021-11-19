@@ -9,7 +9,7 @@
     <b-row class="p-3">
       <b-col class="text-left" v-html="enterToBr(comment.content)"></b-col>
     </b-row>
-    <b-row>
+    <b-row v-if="comment.userid === userInfo.userid">
       <b-col class="text-right">
         <b-link @click="modifyCommentView">수정</b-link> |
         <b-link @click="delComment">삭제</b-link>
@@ -20,15 +20,18 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 // import http from "@/util/http-common";
 const qnaStore = "qnaStore";
-
+const memberStore = "memberStore";
 export default {
   name: "comment",
   props: {
     // 상위 component에서 전달한 도서평을 받는다.
     comment: Object,
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     ...mapActions(qnaStore, ["deleteComment"]),

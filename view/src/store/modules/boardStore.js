@@ -65,7 +65,7 @@ const boardStore = {
           commit("setArticles", data.list);
           // commit("setCurrentPage", param.pg);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -77,7 +77,7 @@ const boardStore = {
         ({ data }) => {
           commit("setArticle", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -90,7 +90,7 @@ const boardStore = {
           commit("setArticle", data);
           // 글 작성 후 게시글 리스트로 이동하는 코드 작성해야함 !!!!!!!!!!!!
         },
-        (error) => {
+        error => {
           commit("setSuccess", false);
           console.log(error);
         }
@@ -109,7 +109,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
@@ -125,7 +125,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );

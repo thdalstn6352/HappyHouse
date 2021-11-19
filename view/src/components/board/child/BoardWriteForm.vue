@@ -2,7 +2,7 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group
+        <!-- <b-form-group
           id="userid-group"
           label="작성자:"
           label-for="userid"
@@ -16,7 +16,7 @@
             required
             placeholder="작성자 입력..."
           ></b-form-input>
-        </b-form-group>
+        </b-form-group> -->
 
         <b-form-group
           id="subject-group"
@@ -61,8 +61,9 @@
 
 <script>
 // import http from "@/util/http-common";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 const boardStore = "boardStore";
+const memberStore = "memberStore";
 
 export default {
   name: "BoardWriteForm",
@@ -83,10 +84,9 @@ export default {
   },
   computed: {
     ...mapGetters(boardStore, ["article", "isSuccess"]),
+    ...mapState(memberStore, ["userInfo"]),
   },
   created() {
-    // this.setSuccess(false);
-    console.log(this.isSuccess);
     if (this.type === "modify") {
       this.getArticle(`${this.$route.params.articleno}`);
       this.articleForm = this.article;
@@ -101,10 +101,7 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.articleForm.userid &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.userid.focus());
+
       err &&
         !this.articleForm.subject &&
         ((msg = "제목 입력해주세요"),
@@ -128,8 +125,9 @@ export default {
       this.$router.push({ name: "BoardList" });
     },
     registArticle() {
+      this.articleForm.userid = this.userInfo.userid;
       this.writeArticle(this.articleForm);
-      this.moveList();
+      // this.moveList();
     },
     updateArticle() {
       this.modifyArticle(this.articleForm);

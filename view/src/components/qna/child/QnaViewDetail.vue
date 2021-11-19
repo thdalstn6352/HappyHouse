@@ -21,6 +21,7 @@ export default {
   name: "qnaviewdetail",
   computed: {
     message() {
+      console.log(this.qna);
       if (this.qna.content) {
         return this.qna.content.split("\n").join("<br>");
       } else {

@@ -2,7 +2,7 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group
+        <!-- <b-form-group
           id="userid-group"
           label="작성자:"
           label-for="userid"
@@ -16,7 +16,7 @@
             required
             placeholder="작성자 입력..."
           ></b-form-input>
-        </b-form-group>
+        </b-form-group> -->
 
         <b-form-group
           id="subject-group"
@@ -60,9 +60,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 // import http from "@/util/http-common";
 const qnaStore = "qnaStore";
+const memberStore = "memberStore";
 
 export default {
   name: "QnaWriteForm",
@@ -82,6 +83,7 @@ export default {
   },
   computed: {
     ...mapGetters(qnaStore, ["qna"]),
+    ...mapState(memberStore, ["userInfo"]),
   },
   created() {
     if (this.type === "modify") {
@@ -97,10 +99,6 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.qnaForm.userid &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.userid.focus());
       err &&
         !this.qnaForm.subject &&
         ((msg = "제목 입력해주세요"),
@@ -123,6 +121,7 @@ export default {
       this.$router.push({ name: "QnaList" });
     },
     registQna() {
+      this.qnaForm.userid = this.userInfo.userid;
       this.writeQna(this.qnaForm);
     },
     updateQna() {
