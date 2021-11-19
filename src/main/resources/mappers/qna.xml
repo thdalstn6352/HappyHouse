@@ -26,6 +26,19 @@
 		where qnano = #{qnano}
 	</select>
 	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(qnano)
+		from qna
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+	
 	<update id="modifyQna" parameterType="qnaDto">
 		update qna
 		set subject = #{subject}, content = #{content}

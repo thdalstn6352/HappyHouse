@@ -1,6 +1,8 @@
 package com.ssafy.vue.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +52,12 @@ public class QnaController {
 	
 	@ApiOperation(value = "QnA 목록", notes = "모든 qna의 정보를 반환한다.", response = List.class)
 	@GetMapping("/qna")
-	public ResponseEntity<List<QnaDto>> list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) QnaParameterDto qnaParameterDto) throws Exception {
+	public ResponseEntity<Map<String, Object>> list(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) QnaParameterDto qnaParameterDto) throws Exception {
 		logger.info("listArticle - 호출");
-		return new ResponseEntity<List<QnaDto>>(qnaService.list(qnaParameterDto), HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("list",qnaService.list(qnaParameterDto));
+		resultMap.put("pageNav",qnaService.makePageNavigation(qnaParameterDto));
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "QnA 글보기", notes = "글번호에 해당하는 QnA의 정보를 반환한다.", response = QnaDto.class)

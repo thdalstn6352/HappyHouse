@@ -18,6 +18,8 @@ const qnaStore = {
     qna: {},
     comments: [],
     comment: {},
+    totalRows: Number,
+    currentPage: Number,
   },
   getters: {
     qnas(state) {
@@ -28,6 +30,12 @@ const qnaStore = {
     },
     comments(state) {
       return state.comments;
+    },
+    totalCount(state) {
+      return state.totalRows;
+    },
+    getCurrentPage(state) {
+      return state.currentPage;
     },
   },
   mutations: {
@@ -43,14 +51,22 @@ const qnaStore = {
     setComment(state, payload) {
       state.comment = payload;
     },
+    setTotalRows(state, payload) {
+      state.totalRows = payload;
+    },
+    setCurrentPage(state, payload) {
+      state.currentPage = payload;
+    },
   },
   actions: {
-    getQnas: ({ commit }) => {
+    getQnas: ({ commit }, param) => {
       getQnas(
+        param,
         ({ data }) => {
-          commit("setQnas", data);
+          commit("setTotalRows", data.pageNav.totalCount);
+          commit("setQnas", data.list);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -61,7 +77,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setQna", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -73,7 +89,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setQna", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -90,7 +106,7 @@ const qnaStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -106,7 +122,7 @@ const qnaStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -118,7 +134,7 @@ const qnaStore = {
         ({ data }) => {
           commit("setComments", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -135,12 +151,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            error => {
+            (error) => {
               console.log(error);
             }
           );
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -156,12 +172,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            error => {
+            (error) => {
               console.log(error);
             }
           );
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -181,12 +197,12 @@ const qnaStore = {
             ({ data }) => {
               commit("setComments", data);
             },
-            error => {
+            (error) => {
               console.log(error);
             }
           );
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );

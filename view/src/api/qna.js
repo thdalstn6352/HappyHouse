@@ -2,8 +2,8 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-function getQnas(success, fail) {
-  api.get(`/qna`).then(success).catch(fail);
+function getQnas(param, success, fail) {
+  api.get(`/qna`, { params: param }).then(success).catch(fail);
 }
 
 function getQna(qnano, success, fail) {

@@ -36,6 +36,14 @@
       </b-col>
       <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="totalCount"
+      align="center"
+      :per-page="perPage"
+      @page-click="pageClick"
+    >
+    </b-pagination>
   </b-container>
 </template>
 
@@ -48,18 +56,33 @@ const qnaStore = "qnaStore";
 
 export default {
   name: "QnaList",
+  data() {
+    return {
+      currentPage: 1,
+      perPage: 10,
+    };
+  },
   components: {
     QnaListRow,
   },
   computed: {
-    ...mapGetters(qnaStore, ["qnas"]),
+    ...mapGetters(qnaStore, [
+      "qnas",
+      "pageNav",
+      "totalCount",
+      "getCurrentPage",
+    ]),
   },
   created() {
-    this.getQnas();
+    this.getQnas({ pg: this.currentPage, spp: 10 });
     // this.$store.dispatch("getQnas");
   },
   methods: {
     ...mapActions(qnaStore, ["getQnas"]),
+    pageClick: function (button, page) {
+      this.currentPage = page;
+      this.getQnas({ pg: this.currentPage, spp: 10 });
+    },
     moveWrite() {
       this.$router.push({ name: "QnaWrite" });
     },

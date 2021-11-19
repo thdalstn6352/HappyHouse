@@ -17,10 +17,6 @@ public class BoardParameterDto {
 	@ApiModelProperty(value = "검색어")
 	private String word;
 	
-	public BoardParameterDto() {
-		pg = 1;
-		spp = 20;
-	}
 
 	public int getPg() {
 		return pg;

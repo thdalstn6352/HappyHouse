@@ -1,6 +1,8 @@
 package com.ssafy.vue.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +52,12 @@ public class BoardController {
 	
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
 	@GetMapping
-	public ResponseEntity<List<BoardDto>> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto) throws Exception {
+	public ResponseEntity<Map<String, Object>> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) BoardParameterDto boardParameterDto) throws Exception {
 		logger.info("listArticle - 호출");
-		return new ResponseEntity<List<BoardDto>>(boardService.listArticle(boardParameterDto), HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("list", boardService.listArticle(boardParameterDto));
+		resultMap.put("pageNav", boardService.makePageNavigation(boardParameterDto));
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)

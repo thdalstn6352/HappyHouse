@@ -36,6 +36,14 @@
       </b-col>
       <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="totalCount"
+      align="center"
+      :per-page="perPage"
+      @page-click="pageClick"
+    >
+    </b-pagination>
   </b-container>
 </template>
 
@@ -48,20 +56,35 @@ const boardStore = "boardStore";
 
 export default {
   name: "BoardList",
+  data() {
+    return {
+      currentPage: 1,
+      perPage: 10,
+    };
+  },
   components: {
     BoardListRow,
   },
-
   created() {
-    this.getArticles();
+    this.getArticles({ pg: this.currentPage, spp: 10 });
   },
+
   computed: {
-    ...mapGetters(boardStore, ["articles"]),
+    ...mapGetters(boardStore, [
+      "articles",
+      "pageNav",
+      "totalCount",
+      "getCurrentPage",
+    ]),
   },
   methods: {
     ...mapActions(boardStore, ["getArticles"]),
     moveWrite() {
       this.$router.push({ name: "BoardWrite" });
+    },
+    pageClick: function (button, page) {
+      this.currentPage = page;
+      this.getArticles({ pg: this.currentPage, spp: 10 });
     },
   },
 };

@@ -17,10 +17,6 @@ public class QnaParameterDto {
 	@ApiModelProperty(value = "검색어")
 	private String word;
 	
-	public QnaParameterDto() {
-		pg = 1;
-		spp = 20;
-	}
 
 	public int getPg() {
 		return pg;

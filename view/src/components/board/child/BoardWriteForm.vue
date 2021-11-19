@@ -128,11 +128,8 @@ export default {
       this.$router.push({ name: "BoardList" });
     },
     registArticle() {
-      console.log("1" + this.isSuccess);
       this.writeArticle(this.articleForm);
-      console.log("2" + this.isSuccess);
-      if (this.isSuccess) this.moveList();
-      // this.moveList();
+      this.moveList();
     },
     updateArticle() {
       this.modifyArticle(this.articleForm);

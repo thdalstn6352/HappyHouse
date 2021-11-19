@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.util.PageNavigation;
 import com.ssafy.vue.model.AnswerDto;
 import com.ssafy.vue.model.BoardDto;
+import com.ssafy.vue.model.BoardParameterDto;
 import com.ssafy.vue.model.QnaDto;
 import com.ssafy.vue.model.QnaParameterDto;
 import com.ssafy.vue.model.mapper.BoardMapper;
@@ -35,10 +36,23 @@ public class QnaServiceImpl implements QnaService {
 		return sqlSession.getMapper(QnaMapper.class).list(qnaParameterDto);
 	}
 
+	
 	@Override
 	public PageNavigation makePageNavigation(QnaParameterDto qnaParameterDto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		int naviSize = 5;
+		PageNavigation pageNavigation = new PageNavigation();
+		pageNavigation.setCurrentPage(qnaParameterDto.getPg());
+		pageNavigation.setNaviSize(naviSize);
+		int totalCount = sqlSession.getMapper(QnaMapper.class).getTotalCount(qnaParameterDto);//총글갯수  269
+		pageNavigation.setTotalCount(totalCount);  
+		int totalPageCount = (totalCount - 1) / qnaParameterDto.getSpp() + 1;//27
+		pageNavigation.setTotalPageCount(totalPageCount);
+		boolean startRange = qnaParameterDto.getPg() <= naviSize;
+		pageNavigation.setStartRange(startRange);
+		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < qnaParameterDto.getPg();
+		pageNavigation.setEndRange(endRange);
+		pageNavigation.makeNavigator();
+		return pageNavigation;
 	}
 
 	@Override

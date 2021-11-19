@@ -13,6 +13,8 @@ const boardStore = {
     articles: [],
     article: {},
     isSuccess: false,
+    totalRows: Number,
+    currentPage: Number,
   },
   getters: {
     articles(state) {
@@ -25,6 +27,12 @@ const boardStore = {
     },
     isSuccess(state) {
       return state.isSuccess;
+    },
+    totalCount(state) {
+      return state.totalRows;
+    },
+    getCurrentPage(state) {
+      return state.currentPage;
     },
   },
   mutations: {
@@ -40,15 +48,24 @@ const boardStore = {
     setSuccess(state, payload) {
       state.isSuccess = payload;
     },
+    setTotalRows(state, payload) {
+      state.totalRows = payload;
+    },
+    setCurrentPage(state, payload) {
+      state.currentPage = payload;
+    },
   },
   actions: {
     // 서버에서 게시글을 얻고 mutation의 setArticles를 호출한다.
-    getArticles: ({ commit }) => {
+    getArticles: ({ commit }, param) => {
       listArticle(
+        param,
         ({ data }) => {
-          commit("setArticles", data);
+          commit("setTotalRows", data.pageNav.totalCount);
+          commit("setArticles", data.list);
+          // commit("setCurrentPage", param.pg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -60,7 +77,7 @@ const boardStore = {
         ({ data }) => {
           commit("setArticle", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -69,12 +86,11 @@ const boardStore = {
       writeArticle(
         article,
         ({ data }) => {
-          // commit("setSuccess", true);
+          console.log(data);
           commit("setArticle", data);
           // 글 작성 후 게시글 리스트로 이동하는 코드 작성해야함 !!!!!!!!!!!!
-          // return "hihi";
         },
-        error => {
+        (error) => {
           commit("setSuccess", false);
           console.log(error);
         }
@@ -93,7 +109,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -109,7 +125,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
