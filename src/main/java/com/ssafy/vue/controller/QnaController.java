@@ -94,7 +94,7 @@ public class QnaController {
 	public ResponseEntity<String> writeAnswer(@RequestBody @ApiParam(value = "답변 등록.", required = true) AnswerDto answerDto) throws Exception {
 		logger.info("writeArticle - 호출");
 		if (qnaService.writeAnswer(answerDto)) {
-			qnaService.updateAnswered(answerDto.getQnano());
+			qnaService.answeredTrue(answerDto.getQnano());
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -115,18 +115,24 @@ public class QnaController {
 	@DeleteMapping("/answer/{answerno}")
 	public ResponseEntity<String> deleteAnswer(@PathVariable("answerno") @ApiParam(value = "삭제할 답변의 번호.", required = true) int answerno) throws Exception {
 		logger.info("deleteAnswer - 호출");
+		int qnano = qnaService.getAnswer(answerno).getQnano();
 		if (qnaService.deleteAnswer(answerno)) {
+			qnaService.answeredFalse(qnano);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value = "답변 정보 가져오기", notes = "답변번호에 해당하는 Answer정보를 반환한다.", response = AnswerDto.class)
-	@GetMapping("/answer/{qnano}/{answerno}")
-	public ResponseEntity<AnswerDto> getAnswer(@PathVariable("answerno") @ApiParam(value = "얻어올 답변의 글번호.", required = true) int answerno) throws Exception {
-		logger.info("getAnswer - 호출 : " + answerno);
-		return new ResponseEntity<AnswerDto>(qnaService.getAnswer(answerno), HttpStatus.OK);
-	}
+	/*
+	 * @ApiOperation(value = "답변 정보 가져오기", notes = "답변번호에 해당하는 Answer정보를 반환한다.",
+	 * response = AnswerDto.class)
+	 * 
+	 * @GetMapping("/answer/{qnano}/{answerno}") public ResponseEntity<AnswerDto>
+	 * getAnswer(@PathVariable("answerno") @ApiParam(value = "얻어올 답변의 글번호.",
+	 * required = true) int answerno) throws Exception {
+	 * logger.info("getAnswer - 호출 : " + answerno); return new
+	 * ResponseEntity<AnswerDto>(qnaService.getAnswer(answerno), HttpStatus.OK); }
+	 */
 	
 	
 

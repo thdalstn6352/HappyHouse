@@ -14,7 +14,8 @@ public interface QnaService {
 	public PageNavigation makePageNavigation(QnaParameterDto qnaParameterDto) throws Exception;
 	
 	public QnaDto getQna(int qnano) throws Exception;
-	public void updateAnswered(int qnano) throws Exception;
+	public void answeredTrue(int qnano) throws Exception;
+	public void answeredFalse(int qnano) throws Exception;
 	public boolean modifyQna(QnaDto qnaDto) throws Exception;
 	public boolean deleteQna(int qnano) throws Exception;
 	

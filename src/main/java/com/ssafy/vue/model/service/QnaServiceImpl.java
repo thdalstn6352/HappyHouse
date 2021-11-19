@@ -47,8 +47,13 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public void updateAnswered(int qnano) throws Exception {
-		sqlSession.getMapper(QnaMapper.class).updateAnswered(qnano);
+	public void answeredTrue(int qnano) throws Exception {
+		sqlSession.getMapper(QnaMapper.class).answeredTrue(qnano);
+	}
+	
+	@Override
+	public void answeredFalse(int qnano) throws Exception {
+		sqlSession.getMapper(QnaMapper.class).answeredFalse(qnano);
 	}
 
 	@Override

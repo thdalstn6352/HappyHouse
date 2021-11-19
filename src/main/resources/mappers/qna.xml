@@ -64,10 +64,16 @@
 		where answerno = #{answerno}
 	</delete>
 	
-	<update id="updateAnswered" parameterType="int">
+	<update id="answeredTrue" parameterType="int">
 		update qna
 		set answered = true
 		where qnano = #{qnano}
+	</update>
+	
+	<update id="answeredFalse" parameterType="int">
+		update qna
+		set answered = false
+		where qnano = #{qnano} and qnano not in (select qnano from answer where qnano = #{qnano})
 	</update>
 	
 	<select id="getAnswer" parameterType="int" resultType="answerDto">
