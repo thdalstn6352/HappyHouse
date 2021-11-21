@@ -32,8 +32,9 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public List<HouseInfoDto> getAptInDong(String dong) throws Exception {
-		return sqlSession.getMapper(HouseMapMapper.class).getAptInDong(dong);
+	public List<HouseInfoDto> getAptDealInGugun(String gugun) throws Exception {
+
+		return null;
 	}
 
 }
