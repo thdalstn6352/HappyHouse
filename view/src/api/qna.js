@@ -10,16 +10,16 @@ function getQna(qnano, success, fail) {
   api.get(`/qna/${qnano}`).then(success).catch(fail);
 }
 
-function writeQna(qna, success, fail) {
-  api.post(`/qna`, qna).then(success).catch(fail);
+async function writeQna(qna, success, fail) {
+  await api.post(`/qna`, qna).then(success).catch(fail);
 }
 
-function modifyQna(qna, success, fail) {
-  api.put(`/qna`, qna).then(success).catch(fail);
+async function modifyQna(qna, success, fail) {
+  await api.put(`/qna`, qna).then(success).catch(fail);
 }
 
-function deleteQna(qnano, success, fail) {
-  api.put(`/qna/${qnano}`).then(success).catch(fail);
+async function deleteQna(qnano, success, fail) {
+  await api.put(`/qna/${qnano}`).then(success).catch(fail);
 }
 
 function getComments(qnano, success, fail) {

@@ -80,8 +80,6 @@ export default {
     this.qnano = parseInt(this.$route.params.qnano);
     this.getQna(this.qnano);
     this.getComments(this.qnano);
-    console.log(this.qna);
-    console.log(this.userInfo);
   },
   methods: {
     ...mapActions(qnaStore, ["getQna", "getComments"]),

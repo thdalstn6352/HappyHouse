@@ -2,22 +2,6 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <!-- <b-form-group
-          id="userid-group"
-          label="작성자:"
-          label-for="userid"
-          description="작성자를 입력하세요."
-        >
-          <b-form-input
-            id="userid"
-            :disabled="isUserid"
-            v-model="articleForm.userid"
-            type="text"
-            required
-            placeholder="작성자 입력..."
-          ></b-form-input>
-        </b-form-group> -->
-
         <b-form-group
           id="subject-group"
           label="제목:"
@@ -26,6 +10,7 @@
         >
           <b-form-input
             id="subject"
+            ref="subject"
             v-model="articleForm.subject"
             type="text"
             required
@@ -36,6 +21,7 @@
         <b-form-group id="content-group" label="내용:" label-for="content">
           <b-form-textarea
             id="content"
+            ref="content"
             v-model="articleForm.content"
             placeholder="내용 입력..."
             rows="10"
@@ -124,16 +110,21 @@ export default {
       this.articleForm.content = "";
       this.$router.push({ name: "BoardList" });
     },
-    registArticle() {
+    async registArticle() {
       this.articleForm.userid = this.userInfo.userid;
-      this.writeArticle(this.articleForm);
-      // this.moveList();
+      await this.writeArticle(this.articleForm);
+      this.moveList();
     },
-    updateArticle() {
-      this.modifyArticle(this.articleForm);
+    async updateArticle() {
+      console.log("수정");
+      await this.modifyArticle(this.articleForm);
+      this.moveView();
     },
     moveList() {
       this.$router.push({ name: "BoardList" });
+    },
+    moveView() {
+      this.$router.push({ name: "BoardView" });
     },
   },
 };

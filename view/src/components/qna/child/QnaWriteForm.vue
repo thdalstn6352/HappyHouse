@@ -120,15 +120,20 @@ export default {
       this.article.content = "";
       this.$router.push({ name: "QnaList" });
     },
-    registQna() {
+    async registQna() {
       this.qnaForm.userid = this.userInfo.userid;
-      this.writeQna(this.qnaForm);
+      await this.writeQna(this.qnaForm);
+      this.moveList();
     },
-    updateQna() {
-      this.modifyQna(this.qnaForm);
+    async updateQna() {
+      await this.modifyQna(this.qnaForm);
+      this.moveView();
     },
     moveList() {
       this.$router.push({ name: "QnaList" });
+    },
+    moveView() {
+      this.$router.push({ name: "QnaView" });
     },
   },
 };

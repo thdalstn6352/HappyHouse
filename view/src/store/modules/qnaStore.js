@@ -18,6 +18,7 @@ const qnaStore = {
     qna: {},
     comments: [],
     comment: {},
+    isSuccess: false,
     totalRows: Number,
     currentPage: Number,
   },
@@ -57,6 +58,9 @@ const qnaStore = {
     setCurrentPage(state, payload) {
       state.currentPage = payload;
     },
+    setSuccess(state, payload) {
+      state.isSuccess = payload;
+    },
   },
   actions: {
     getQnas: ({ commit }, param) => {
@@ -84,11 +88,12 @@ const qnaStore = {
       );
     },
 
-    writeQna: ({ commit }, qna) => {
-      writeQna(
+    async writeQna({ commit }, qna) {
+      await writeQna(
         qna,
         ({ data }) => {
-          commit("setQna", data);
+          console.log(data);
+          commit("setQna", qna);
         },
         error => {
           console.log(error);
@@ -96,11 +101,11 @@ const qnaStore = {
       );
     },
 
-    modifyQna: ({ commit }, qna) => {
-      modifyQna(
+    async modifyQna({ commit }, qna) {
+      await modifyQna(
         qna,
         ({ data }) => {
-          commit("setQna", data);
+          commit("setQna", qna);
           let msg = "수정 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "수정이 완료되었습니다.";
@@ -112,11 +117,11 @@ const qnaStore = {
         }
       );
     },
-    deleteQna: ({ commit }, qnano) => {
-      deleteQna(
+    async deleteQna({ commit }, qnano) {
+      await deleteQna(
         qnano,
         ({ data }) => {
-          commit("setQna", data);
+          commit("setQna", {});
           let msg = "삭제 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "삭제가 완료되었습니다.";

@@ -14,7 +14,6 @@ import BoardList from "@/components/board/BoardList.vue";
 import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardView from "@/components/board/BoardView.vue";
 import BoardUpdate from "@/components/board/BoardUpdate.vue";
-import BoardDelete from "@/components/board/BoardDelete.vue";
 
 import House from "@/views/House.vue";
 import store from "@/store/index.js";
@@ -24,7 +23,6 @@ import QnaList from "@/components/qna/QnaList.vue";
 import QnaWrite from "@/components/qna/QnaWrite.vue";
 import QnaView from "@/components/qna/QnaView.vue";
 import QnaUpdate from "@/components/qna/QnaUpdate.vue";
-import QnaDelete from "@/components/qna/QnaDelete.vue";
 Vue.use(VueRouter);
 
 const onlyAuthUser = async (to, from, next) => {
@@ -113,11 +111,6 @@ const routes = [
         beforeEnter: onlyAuthUser,
         component: BoardUpdate,
       },
-      {
-        path: "delete/:articleno",
-        name: "BoardDelete",
-        component: BoardDelete,
-      },
     ],
   },
   {
@@ -157,11 +150,6 @@ const routes = [
         name: "QnaUpdate",
         beforeEnter: onlyAuthUser,
         component: QnaUpdate,
-      },
-      {
-        path: "delete/:qnano",
-        name: "QnaDelete",
-        component: QnaDelete,
       },
     ],
   },

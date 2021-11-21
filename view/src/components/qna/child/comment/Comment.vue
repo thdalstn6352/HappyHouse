@@ -44,7 +44,6 @@ export default {
       });
     },
     delComment() {
-      console.log(this.comment);
       this.deleteComment(this.comment);
       // if (confirm("정말로 삭제?")) {
       //   // 서버로 삭제할 도서평번호를 전달.

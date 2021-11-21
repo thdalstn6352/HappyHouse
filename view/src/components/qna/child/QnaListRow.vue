@@ -18,7 +18,8 @@
 </template>
 
 <script>
-// import moment from "moment";
+// import { mapState } from "vuex";
+// const memberStore = "memberStore";
 
 export default {
   name: "QnaListRow",
@@ -30,6 +31,7 @@ export default {
     answered: Boolean,
   },
   computed: {
+    // ...mapState(memberStore, ["userInfo"]),
     // changeDateFormat() {
     //   return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     // },

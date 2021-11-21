@@ -88,10 +88,11 @@ export default {
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
-    doDeleteArticle() {
+    async doDeleteArticle() {
       if (confirm("정말로 삭제하시겠습니까?")) {
-        this.deleteArticle(this.articleno);
+        await this.deleteArticle(this.articleno);
       }
+      this.listArticle();
     },
   },
 };

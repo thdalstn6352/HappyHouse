@@ -82,27 +82,23 @@ const boardStore = {
         }
       );
     },
-    writeArticle: ({ commit }, article) => {
-      writeArticle(
+    async writeArticle({ commit }, article) {
+      await writeArticle(
         article,
         ({ data }) => {
           console.log(data);
-          commit("setArticle", data);
-          // 글 작성 후 게시글 리스트로 이동하는 코드 작성해야함 !!!!!!!!!!!!
+          commit("setArticle", article);
         },
         error => {
-          commit("setSuccess", false);
           console.log(error);
         }
       );
     },
-    modifyArticle: ({ commit }, article) => {
-      console.log(article);
-
-      modifyArticle(
+    async modifyArticle({ commit }, article) {
+      await modifyArticle(
         article,
         ({ data }) => {
-          commit("setArticle", data);
+          commit("setArticle", article);
           let msg = "수정 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "수정이 완료되었습니다.";
@@ -114,11 +110,11 @@ const boardStore = {
         }
       );
     },
-    deleteArticle: ({ commit }, articleno) => {
-      deleteArticle(
+    async deleteArticle({ commit }, articleno) {
+      await deleteArticle(
         articleno,
         ({ data }) => {
-          commit("setArticle", data);
+          commit("setArticle", {});
           let msg = "삭제 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "삭제가 완료되었습니다.";
