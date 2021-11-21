@@ -82,7 +82,7 @@ export default {
     this.getComments(this.qnano);
   },
   methods: {
-    ...mapActions(qnaStore, ["getQna", "getComments"]),
+    ...mapActions(qnaStore, ["getQna", "deleteQna", "getComments"]),
     listArticle() {
       this.$router.push({ name: "QnaList" });
     },
@@ -93,13 +93,11 @@ export default {
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
-    deleteArticle() {
+    async deleteArticle() {
       if (confirm("정말로 삭제?")) {
-        this.$router.replace({
-          name: "QnaDelete",
-          params: { qnano: this.qnano },
-        });
+        await this.deleteQna(this.qnano);
       }
+      this.listArticle();
     },
     onModifyComment(comment) {
       this.modifyComment = comment;

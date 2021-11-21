@@ -19,7 +19,7 @@ async function modifyQna(qna, success, fail) {
 }
 
 async function deleteQna(qnano, success, fail) {
-  await api.put(`/qna/${qnano}`).then(success).catch(fail);
+  await api.delete(`/qna/${qnano}`).then(success).catch(fail);
 }
 
 function getComments(qnano, success, fail) {
