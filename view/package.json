@@ -53,6 +53,9 @@
           "endOfLine": "auto"
         }
       ]
+    },
+    "globals": {
+      "kakao": false
     }
   },
   "browserslist": [

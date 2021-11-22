@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center">
+  <b-container fluid class="bv-example-row mt-3 text-center">
     <h3 class="underline-orange">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
@@ -9,11 +9,12 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col cols="6" align="left">
+      <b-col cols="4" align="left">
         <house-list />
       </b-col>
-      <b-col cols="6">
-        <house-detail />
+      <b-col cols="8">
+        <!-- <house-detail /> -->
+        <house-map />
       </b-col>
     </b-row>
   </b-container>
@@ -21,14 +22,16 @@
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
-import HouseDetail from "@/components/house/HouseDetail.vue";
+// import HouseDetail from "@/components/house/HouseDetail.vue";
+import HouseMap from "@/components/house/HouseMap.vue";
 
 export default {
   name: "House",
   components: {
     HouseSearchBar,
     HouseList,
-    HouseDetail,
+    // HouseDetail,
+    HouseMap,
   },
 };
 </script>
