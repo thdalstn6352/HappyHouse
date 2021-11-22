@@ -10,6 +10,6 @@ public interface HouseMapService {
 	List<SidoGugunCodeDto> getSido() throws Exception;
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
-	List<HouseInfoDto> getAptDealInGugun(String gugun) throws Exception;
+	String getAddress(String gugun) throws Exception;
 	
 }

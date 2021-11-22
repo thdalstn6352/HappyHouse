@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.slf4j.Logger;
@@ -35,13 +37,13 @@ public class HouseMapController {
 	private final Logger logger = LoggerFactory.getLogger(HouseMapController.class);
 
 	@Autowired
-	private HouseMapService haHouseMapService;
+	private HouseMapService houseMapService;
 
 	@ApiOperation(value = "시도 정보", notes = "전국의 시도를 반환한다.", response = List.class)
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
 		logger.info("sido - 호출");
-		return new ResponseEntity<List<SidoGugunCodeDto>>(haHouseMapService.getSido(), HttpStatus.OK);
+		return new ResponseEntity<List<SidoGugunCodeDto>>(houseMapService.getSido(), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "구군 정보", notes = "전국의 구군을 반환한다.", response = List.class)
@@ -49,7 +51,7 @@ public class HouseMapController {
 	public ResponseEntity<List<SidoGugunCodeDto>> gugun(
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido) throws Exception {
 		logger.info("gugun - 호출");
-		return new ResponseEntity<List<SidoGugunCodeDto>>(haHouseMapService.getGugunInSido(sido), HttpStatus.OK);
+		return new ResponseEntity<List<SidoGugunCodeDto>>(houseMapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 
 //	@GetMapping("/dong")
@@ -57,7 +59,7 @@ public class HouseMapController {
 //		return new ResponseEntity<List<HouseInfoDto>>(haHouseMapService.getDongInGugun(gugun), HttpStatus.OK);
 //	}
 //	
-	@GetMapping(value="/apt", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") String gugun) throws Exception {
 
 		StringBuilder urlBuilder = new StringBuilder(
@@ -86,7 +88,41 @@ public class HouseMapController {
 		}
 
 		JSONObject jsonObject = XML.toJSONObject(result.toString());
-//		System.out.println(jsonObject.toString());
+
+		String GEOCODE_URL = "http://dapi.kakao.com/v2/local/search/address.json?query=";
+		String GEOCODE_USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
+		URL obj;
+		JSONArray items = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items")
+				.getJSONArray("item");
+//		System.out.println(items.toString());
+		for (int i = 0; i < items.length(); i++) {
+			JSONObject item = items.getJSONObject(i);
+			StringBuilder sb = new StringBuilder();
+			sb.append(houseMapService.getAddress(gugun)).append(" ");
+			sb.append(item.getString("법정동")).append(" ");
+			sb.append(item.get("지번"));
+
+			String address = URLEncoder.encode(sb.toString(), "UTF-8");
+			obj = new URL(GEOCODE_URL + address);
+			conn = (HttpURLConnection) obj.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Authorization", GEOCODE_USER_INFO);
+			conn.setRequestProperty("content-type", "application/json");
+			conn.setDoOutput(true);
+			conn.setUseCaches(false);
+			conn.setDefaultUseCaches(false);
+			Charset charset = Charset.forName("UTF-8");
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			JSONObject xy = new JSONObject(response.toString());
+			item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
+			item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
+
+		}
 
 		rd.close();
 		conn.disconnect();

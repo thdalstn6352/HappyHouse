@@ -32,9 +32,13 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public List<HouseInfoDto> getAptDealInGugun(String gugun) throws Exception {
-
-		return null;
+	public String getAddress(String gugun) throws Exception {
+		StringBuilder sb = new StringBuilder();
+		sb.append(sqlSession.getMapper(HouseMapMapper.class).getSidoName(gugun.substring(0, 2)));
+		sb.append(" ");
+		sb.append(sqlSession.getMapper(HouseMapMapper.class).getGugunName(gugun));
+		return sb.toString();
 	}
+
 
 }

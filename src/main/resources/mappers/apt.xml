@@ -36,4 +36,16 @@
 		order by aptName
 	</select>
 	
+	<select id="getSidoName" parameterType="string" resultType="String">
+		select sidoName
+		from sidocode
+		where left(sidoCode, 2) = #{sidoCode}
+	</select>
+	
+	<select id="getGugunName" parameterType="string" resultType="String">
+		select gugunName
+		from guguncode
+		where left(gugunCode, 5) = #{gugunCode}
+	</select>
+	
 </mapper>
