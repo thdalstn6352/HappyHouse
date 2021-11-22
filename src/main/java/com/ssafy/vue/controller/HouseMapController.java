@@ -92,15 +92,15 @@ public class HouseMapController {
 		String GEOCODE_URL = "http://dapi.kakao.com/v2/local/search/address.json?query=";
 		String GEOCODE_USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
 		URL obj;
-		JSONArray items = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items")
-				.getJSONArray("item");
+		JSONArray items = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
 //		System.out.println(items.toString());
-		for (int i = 0; i < items.length(); i++) {
+		for (int i = 1; i < items.length(); i++) {
 			JSONObject item = items.getJSONObject(i);
 			StringBuilder sb = new StringBuilder();
 			sb.append(houseMapService.getAddress(gugun)).append(" ");
-			sb.append(item.getString("법정동")).append(" ");
-			sb.append(item.get("지번"));
+			sb.append(item.getString("도로명")).append(" ");
+			sb.append(item.getString("도로명건물본번호코드")).append(" ");
+			sb.append(item.getString("도로명건물부번호코드"));
 
 			String address = URLEncoder.encode(sb.toString(), "UTF-8");
 			obj = new URL(GEOCODE_URL + address);
@@ -119,8 +119,13 @@ public class HouseMapController {
 				response.append(inputLine);
 			}
 			JSONObject xy = new JSONObject(response.toString());
+
+			System.out.println(xy);
+
 			item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
 			item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
+
+//			return new ResponseEntity<String>(xy.toString(), HttpStatus.OK);
 
 		}
 
