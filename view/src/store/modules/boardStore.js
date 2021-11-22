@@ -13,7 +13,7 @@ const boardStore = {
     articles: [],
     article: {},
     isSuccess: false,
-    totalRows: Number,
+    totalRows: 0,
     currentPage: Number,
   },
   getters: {
@@ -65,7 +65,7 @@ const boardStore = {
           commit("setArticles", data.list);
           // commit("setCurrentPage", param.pg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -77,7 +77,7 @@ const boardStore = {
         ({ data }) => {
           commit("setArticle", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -89,7 +89,7 @@ const boardStore = {
           console.log(data);
           commit("setArticle", article);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -105,7 +105,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -121,7 +121,7 @@ const boardStore = {
           }
           alert(msg);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
