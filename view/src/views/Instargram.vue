@@ -1,43 +1,50 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center">
-    <h3 class="underline-green">
-      <b-icon icon="instagram"></b-icon> 인별그램 Service
+  <b-container fluid class="bv-example-row mt-3 text-center">
+    <h3 class="underline-orange">
+      <b-icon icon="house-fill"></b-icon> House Service
     </h3>
     <b-row>
-      <b-col></b-col>
-      <b-col cols="10">
-        <b-jumbotron
-          bg-variant="muted"
-          text-variant="dark"
-          border-variant="dark"
-        >
-          <template #header>SSAFY 인별그램</template>
-
-          <template #lead> 홍보용 인별그램. </template>
-
-          <hr class="my-4" />
-
-          <p>좋은사진 많이 올려주세요.</p>
-        </b-jumbotron>
+      <b-col>
+        <house-search-bar></house-search-bar>
       </b-col>
-      <b-col></b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="4" align="left">
+        <house-list />
+      </b-col>
+      <b-col cols="8">
+        <!-- <house-detail /> -->
+        <house-map />
+        <!-- <house-map-test /> -->
+      </b-col>
     </b-row>
   </b-container>
 </template>
-
 <script>
+import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
+import HouseList from "@/components/house/HouseList.vue";
+// import HouseDetail from "@/components/house/HouseDetail.vue";
+import HouseMap from "@/components/house/HouseMap.vue";
+// import HouseMapTest from "@/components/house/HouseMapTest.vue";
+
 export default {
-  name: "Instargram",
+  name: "House",
+  components: {
+    HouseSearchBar,
+    HouseList,
+    // HouseDetail,
+    HouseMap,
+    // HouseMapTest,
+  },
 };
 </script>
-
 <style scoped>
-.underline-green {
+.underline-orange {
   display: inline-block;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 70%,
-    rgba(56, 233, 40, 0.3) 30%
+    rgba(231, 149, 27, 0.3) 30%
   );
 }
 </style>
