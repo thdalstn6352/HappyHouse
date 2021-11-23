@@ -19,7 +19,7 @@ public class Cctv {
 		URL url = new URL(strUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		BufferedReader in =  new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		StringBuffer urlString = new StringBuffer();
 		String current;
 		while ((current = in.readLine()) != null) {

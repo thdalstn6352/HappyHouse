@@ -99,6 +99,7 @@ public class HouseMapServiceImpl implements HouseMapService {
 		// 평택시청
 		// 평택시
 		// 경기도_평택시
+		
 
 		if (json.getJSONObject("response").getJSONObject("header").get("resultMsg").equals("NODATA_ERROR")) {
 			parm = new StringBuilder();

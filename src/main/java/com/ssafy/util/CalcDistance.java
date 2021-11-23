@@ -11,7 +11,6 @@ public class CalcDistance {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
-
     
 	public static double distance(double lat1, double lon1, double lat2, double lon2) {
         

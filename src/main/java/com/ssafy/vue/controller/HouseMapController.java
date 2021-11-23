@@ -169,7 +169,6 @@ public class HouseMapController {
 
 	}
 
-	
 	@ApiOperation(value = "좌표 주변 1키로 각종 정보", notes = "해당지역의 각종 정보를 반환한다.", response = List.class)
 	@GetMapping(value = "/around", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> around(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
