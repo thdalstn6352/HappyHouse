@@ -59,7 +59,7 @@ public class HouseMapController {
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido) throws Exception {
 		logger.info("gugun - 호출");
 		return new ResponseEntity<List<SidoGugunCodeDto>>(houseMapService.getGugunInSido(sido), HttpStatus.OK);
-	}	
+	}
 
 	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") String gugun) throws Exception {
@@ -169,13 +169,11 @@ public class HouseMapController {
 
 	}
 
-	
 	@ApiOperation(value = "좌표 주변 1키로 각종 정보", notes = "해당지역의 각종 정보를 반환한다.", response = List.class)
 	@GetMapping(value = "/around", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> around(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
-			@RequestParam("y") @ApiParam(value = "위도", required = true) String y)
-			throws Exception {
-		
+			@RequestParam("y") @ApiParam(value = "위도", required = true) String y) throws Exception {
+
 		JSONObject ret = new JSONObject("{}");
 		ret.put("subway", new JSONObject(houseMapService.getSubway(x, y)).getJSONArray("documents"));
 		ret.put("convenience", new JSONObject(houseMapService.getCv(x, y)).getJSONArray("documents"));
@@ -187,13 +185,14 @@ public class HouseMapController {
 		ret.put("MiddleSchool", new JSONObject(houseMapService.getSchoolM(x, y)).getJSONArray("documents"));
 		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
-		/*
-		 * if(!houseMapService.getCctv(x, y).equals("")) { ret.put("cctv", new
-		 * JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv")); }
-		 */
-		
+
+		if (!houseMapService.getCctv(x, y).equals("")) {
+			ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
+		}else {
+			ret.put("cctv", new JSONArray("[]"));
+		}
+
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}
-	
-	
+
 }
