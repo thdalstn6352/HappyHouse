@@ -187,7 +187,10 @@ public class HouseMapController {
 		ret.put("MiddleSchool", new JSONObject(houseMapService.getSchoolM(x, y)).getJSONArray("documents"));
 		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
-		ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
+		/*
+		 * if(!houseMapService.getCctv(x, y).equals("")) { ret.put("cctv", new
+		 * JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv")); }
+		 */
 		
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}

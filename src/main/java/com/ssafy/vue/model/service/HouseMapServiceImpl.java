@@ -11,8 +11,11 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.util.CalcDistance;
@@ -140,8 +143,15 @@ public class HouseMapServiceImpl implements HouseMapService {
 			}
 		}
 //		System.out.println(json.toString());
+		JSONArray items;
+		try {
+			items = json.getJSONObject("response").getJSONObject("body").getJSONArray("items");
+		} catch (JSONException e) {
+//			e.printStackTrace();
+			return "";
+		}
 
-		JSONArray items = json.getJSONObject("response").getJSONObject("body").getJSONArray("items");
+		
 		JSONObject ret = new JSONObject("{}");
 		JSONArray temp = new JSONArray("[]");
 
