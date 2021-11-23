@@ -59,21 +59,7 @@ public class HouseMapController {
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido) throws Exception {
 		logger.info("gugun - 호출");
 		return new ResponseEntity<List<SidoGugunCodeDto>>(houseMapService.getGugunInSido(sido), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "cctv 정보", notes = "해당지역의 cctv정보를 반환한다.", response = List.class)
-	@GetMapping("/cctv")
-	public ResponseEntity<Double> cctv(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
-			@RequestParam("y") @ApiParam(value = "위도", required = true) String y) throws Exception {
-		
-		//위도 경도로 주소 구하기
-		
-		
-		double dis = CalcDistance.distance(Double.parseDouble(y), Double.parseDouble(x), 37.547125, 127.069409);
-		//동이 같은 cctv 또는 도로명이 같은 cctv 몽땅 가져온다음 거리측정해서 1키로 넘어가는거 처내고 남은거 담아서 리턴
-		
-		return new ResponseEntity<Double>(dis, HttpStatus.OK);
-	}
+	}	
 
 	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") String gugun) throws Exception {
@@ -201,7 +187,7 @@ public class HouseMapController {
 		ret.put("MiddleSchool", new JSONObject(houseMapService.getSchoolM(x, y)).getJSONArray("documents"));
 		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
-//		ret.put("subway", new JSONObject(houseMapService.getCctv(x, y)));
+		ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
 		
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}

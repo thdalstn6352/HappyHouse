@@ -48,4 +48,5 @@
 		where left(gugunCode, 5) = #{gugunCode}
 	</select>
 	
+	
 </mapper>
