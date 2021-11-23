@@ -251,13 +251,77 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public String getSchool(String x, String y) throws Exception {
-		String URL = "https://dapi.kakao.com/v2/local/search/category.json";
+	public String getSchoolE(String x, String y) throws Exception {
+		String URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
+		URL += "?y=" + y;
+		URL += "&x=" + x;
+		URL += "&radius=20000";
+		URL += "&category_group_code=SC4";
+		URL += "&query=" + URLEncoder.encode("초등학교", "UTF-8");
+//		37.514322572335935 127.06283102249932
+		String USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
+		URL obj;
+		obj = new URL(URL);
+		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		conn = (HttpURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Authorization", USER_INFO);
+		conn.setRequestProperty("content-type", "application/json");
+		conn.setDoOutput(true);
+		conn.setUseCaches(false);
+		conn.setDefaultUseCaches(false);
+		Charset charset = Charset.forName("UTF-8");
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		
+		in.close();
+		conn.disconnect();
+		return response.toString();
+	}
+	@Override
+	public String getSchoolM(String x, String y) throws Exception {
+		String URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
 		URL += "?y=" + y;
 		URL += "&x=" + x;
 		URL += "&radius=1000";
 		URL += "&category_group_code=SC4";
-//		URL += "&query=" + URLEncoder.encode("지하철역", "UTF-8");
+		URL += "&query=" + URLEncoder.encode("중학교", "UTF-8");
+//		37.514322572335935 127.06283102249932
+		String USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
+		URL obj;
+		obj = new URL(URL);
+		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		conn = (HttpURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Authorization", USER_INFO);
+		conn.setRequestProperty("content-type", "application/json");
+		conn.setDoOutput(true);
+		conn.setUseCaches(false);
+		conn.setDefaultUseCaches(false);
+		Charset charset = Charset.forName("UTF-8");
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		
+		in.close();
+		conn.disconnect();
+		return response.toString();
+	}
+	@Override
+	public String getSchoolH(String x, String y) throws Exception {
+		String URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
+		URL += "?y=" + y;
+		URL += "&x=" + x;
+		URL += "&radius=1000";
+		URL += "&category_group_code=SC4";
+		URL += "&query=" + URLEncoder.encode("고등학교", "UTF-8");
 //		37.514322572335935 127.06283102249932
 		String USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
 		URL obj;

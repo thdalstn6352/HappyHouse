@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.util.CalcDistance;
 import com.ssafy.vue.model.SidoGugunCodeDto;
 import com.ssafy.vue.model.service.HouseMapService;
 
@@ -62,14 +63,16 @@ public class HouseMapController {
 	
 	@ApiOperation(value = "cctv 정보", notes = "해당지역의 cctv정보를 반환한다.", response = List.class)
 	@GetMapping("/cctv")
-	public ResponseEntity<String> cctv(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
+	public ResponseEntity<Double> cctv(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
 			@RequestParam("y") @ApiParam(value = "위도", required = true) String y) throws Exception {
 		
 		//위도 경도로 주소 구하기
 		
-		//
 		
-		return new ResponseEntity<String>("", HttpStatus.OK);
+		double dis = CalcDistance.distance(Double.parseDouble(y), Double.parseDouble(x), 37.547125, 127.069409);
+		//동이 같은 cctv 또는 도로명이 같은 cctv 몽땅 가져온다음 거리측정해서 1키로 넘어가는거 처내고 남은거 담아서 리턴
+		
+		return new ResponseEntity<Double>(dis, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
@@ -181,10 +184,9 @@ public class HouseMapController {
 	}
 
 	
-	
 	@ApiOperation(value = "좌표 주변 1키로 각종 정보", notes = "해당지역의 각종 정보를 반환한다.", response = List.class)
 	@GetMapping(value = "/around", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<String> subway(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
+	public ResponseEntity<String> around(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
 			@RequestParam("y") @ApiParam(value = "위도", required = true) String y)
 			throws Exception {
 		
@@ -195,13 +197,12 @@ public class HouseMapController {
 		ret.put("bank", new JSONObject(houseMapService.getBank(x, y)).getJSONArray("documents"));
 		ret.put("public", new JSONObject(houseMapService.getPublic(x, y)).getJSONArray("documents"));
 		ret.put("kindergarden", new JSONObject(houseMapService.getKid(x, y)).getJSONArray("documents"));
-		ret.put("school", new JSONObject(houseMapService.getSchool(x, y)).getJSONArray("documents"));
+		ret.put("ElementarySchool", new JSONObject(houseMapService.getSchoolE(x, y)).getJSONArray("documents"));
+		ret.put("MiddleSchool", new JSONObject(houseMapService.getSchoolM(x, y)).getJSONArray("documents"));
+		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
 //		ret.put("subway", new JSONObject(houseMapService.getCctv(x, y)));
 		
-		
-		
-//		System.out.println(xy.toString());
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}
 	
