@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -167,4 +168,73 @@ public class HouseMapController {
 
 	}
 
+	@ApiOperation(value = "cctv 정보", notes = "해당지역의 cctv정보를 반환한다.", response = List.class)
+	@GetMapping("/cctv")
+	public ResponseEntity<String> cctv(@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido)
+			throws Exception {
+
+		String strUrl = "http://api.data.go.kr/openapi/tn_pubr_public_cctv_api";
+		strUrl += "?serviceKey=PdIWX7uJ0xSSI9JZ95aZZauuxtk0z5MSUs1sUq6th8uytplflwZkegSbl4PSkIfWQH9ZQMEVPUI9LoEgksZq%2Fw%3D%3D";
+		strUrl += "&type=xml";
+		strUrl += "&s_page=1";
+		strUrl += "&s_list=1";
+		strUrl += "&instt_nm=광진구청";
+		URL url = new URL(strUrl);
+		URLConnection urlConnection = url.openConnection();
+		HttpURLConnection connection = null;
+		if (urlConnection instanceof HttpURLConnection) {
+			connection = (HttpURLConnection) urlConnection;
+		} else {
+			System.out.println("error");
+
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String urlString = "";
+		String current;
+		while ((current = in.readLine()) != null) {
+			urlString += current + "\n";
+		}
+		System.out.println(urlString);
+
+		return new ResponseEntity<String>("", HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "지하철역 정보", notes = "해당지역의 지하철역 정보를 반환한다.", response = List.class)
+	@GetMapping(value = "/subway", produces = "application/json;charset=UTF-8")
+	public ResponseEntity<String> subway(@RequestParam("x") @ApiParam(value = "경도", required = true) String x,
+			@RequestParam("y") @ApiParam(value = "위도", required = true) String y)
+			throws Exception {
+
+		String URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
+		URL += "?y=" + y;
+		URL += "&x=" + x;
+		URL += "&radius=1000";
+		URL += "&query=" + URLEncoder.encode("지하철역", "UTF-8");;
+//		37.514322572335935 127.06283102249932
+		String USER_INFO = "KakaoAK 7a84c263a1e8243f9ad885d44c730922";
+		URL obj;
+		obj = new URL(URL);
+		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		conn = (HttpURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Authorization", USER_INFO);
+		conn.setRequestProperty("content-type", "application/json");
+		conn.setDoOutput(true);
+		conn.setUseCaches(false);
+		conn.setDefaultUseCaches(false);
+		Charset charset = Charset.forName("UTF-8");
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		
+		JSONObject xy = new JSONObject(response.toString());
+
+//		System.out.println(xy.toString());
+		return new ResponseEntity<String>(xy.toString(), HttpStatus.OK);
+	}
+	
+	
 }
