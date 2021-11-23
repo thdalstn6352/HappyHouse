@@ -47,7 +47,7 @@ export default {
       this.moveDetail();
     },
     moveDetail() {
-      this.$router.replace({
+      this.$router.push({
         name: "HouseDetail",
       });
     },

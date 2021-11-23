@@ -98,27 +98,165 @@
     <b-row>
       <b-col align="center">
         <house-facility-map />
+        <!-- <map-test /> -->
       </b-col>
     </b-row>
     <div class="house-nearby-facility">
       <ul class="tab-menu">
-        <li class="tab-menu-item">
-          <a href="#">편의시설</a>
+        <li
+          class="tab-menu-item"
+          v-bind:class="{
+            active: conv,
+          }"
+        >
+          <b-button variant="outline-primary" @click="getConv()"
+            >편의시설</b-button
+          >
         </li>
-        <li class="tab-menu-item active">
-          <a href="#">안전시설</a>
+        <li
+          class="tab-menu-item"
+          v-bind:class="{
+            active: security,
+          }"
+        >
+          <b-button variant="outline-primary" @click="getSecurity()"
+            >안전시설</b-button
+          >
         </li>
-        <li class="tab-menu-item">
-          <a href="#">학군정보</a>
+        <li
+          class="tab-menu-item"
+          v-bind:class="{
+            active: school,
+          }"
+        >
+          <b-button variant="outline-primary" @click="getSchool()"
+            >학군정보</b-button
+          >
         </li>
       </ul>
+      <b-row class="house-info-detail">
+        <section v-if="this.conv === true" class="option">
+          <dl class="option-detail">
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.convObj.subway,
+              }"
+              @click="isSubway()"
+            >
+              <dt><font-awesome-icon icon="subway" /></dt>
+              <dd>지하철역</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.convObj.convenience,
+              }"
+              @click="isConvinience()"
+            >
+              <dt><font-awesome-icon icon="store" /></dt>
+              <dd>편의점</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.convObj.mart,
+              }"
+              @click="isMart()"
+            >
+              <dt><font-awesome-icon icon="hotel" /></dt>
+              <dd>대형마트</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.convObj.cafe,
+              }"
+              @click="isCafe()"
+            >
+              <dt><font-awesome-icon icon="mug-hot" /></dt>
+              <dd>카페</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.convObj.bank,
+              }"
+              @click="isBank()"
+            >
+              <dt><font-awesome-icon icon="piggy-bank" /></dt>
+              <dd>은행</dd>
+            </div>
+          </dl>
+        </section>
+        <section v-else-if="this.security === true" class="option">
+          <dl class="option-detail">
+            <div class="option-detail-item"></div>
+            <div class="option-detail-item selected">
+              <dt><font-awesome-icon icon="video" /></dt>
+              <dd>CCTV</dd>
+            </div>
+            <div class="option-detail-item"></div>
+            <div class="option-detail-item">
+              <dt><font-awesome-icon icon="user-shield" /></dt>
+              <dd>경찰서</dd>
+            </div>
+            <div class="option-detail-item"></div>
+          </dl>
+        </section>
+        <section v-else-if="this.school === true" class="option">
+          <dl class="option-detail">
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.schoolObj.kindergarden,
+              }"
+              @click="isKindergarden()"
+            >
+              <dt><font-awesome-icon icon="baby" /></dt>
+              <dd>유치원</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.schoolObj.elementary,
+              }"
+              @click="isElementary()"
+            >
+              <dt><font-awesome-icon icon="child" /></dt>
+              <dd>초등학교</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.schoolObj.middle,
+              }"
+              @click="isMiddle()"
+            >
+              <dt><font-awesome-icon icon="school" /></dt>
+              <dd>중학교</dd>
+            </div>
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.schoolObj.high,
+              }"
+              @click="isHigh()"
+            >
+              <dt><font-awesome-icon icon="user-graduate" /></dt>
+              <dd>고등학교</dd>
+            </div>
+          </dl>
+        </section>
+      </b-row>
     </div>
   </b-container>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import HouseFacilityMap from "@/components/house/HouseFacilityMap.vue";
+// import MapTest from "@/components/house/MapTest.vue";
 
 const houseStore = "houseStore";
 
@@ -126,12 +264,33 @@ export default {
   name: "HouseDetail",
   components: {
     HouseFacilityMap,
+    // MapTest,
   },
   data() {
     return {
       size: 0,
       price: "",
       area: 0,
+      conv: true,
+      security: false,
+      school: false,
+      convObj: {
+        subway: false,
+        bank: false,
+        convenience: false,
+        mart: false,
+        cafe: false,
+      },
+      securityObj: {
+        cctv: false,
+        public: false,
+      },
+      schoolObj: {
+        kindergarden: false,
+        elementary: false,
+        middle: false,
+        high: false,
+      },
     };
   },
   created() {
@@ -140,12 +299,108 @@ export default {
       parseInt(this.house.거래금액.replace(",", "")) * 10000
     );
     this.area = this.house.전용면적.toFixed(2);
+    this.getAround({ x: this.house.x, y: this.house.y });
   },
   computed: {
-    ...mapState(houseStore, ["house"]),
+    ...mapState(houseStore, ["house", "arounds"]),
   },
 
   methods: {
+    ...mapActions(houseStore, ["getAround"]),
+    ...mapMutations(houseStore, ["SET_MARKER_LIST"]),
+    getConv() {
+      this.conv = true;
+      this.security = false;
+      this.school = false;
+    },
+    getSecurity() {
+      this.conv = false;
+      this.security = true;
+      this.school = false;
+    },
+    getSchool() {
+      this.conv = false;
+      this.security = false;
+      this.school = true;
+    },
+    isSubway() {
+      this.convObj.subway = true;
+      this.convObj.bank = false;
+      this.convObj.mart = false;
+      this.convObj.convenience = false;
+      this.convObj.cafe = false;
+      this.SET_MARKER_LIST(this.arounds.subway);
+    },
+    isBank() {
+      this.convObj.subway = false;
+      this.convObj.bank = true;
+      this.convObj.mart = false;
+      this.convObj.convenience = false;
+      this.convObj.cafe = false;
+      this.SET_MARKER_LIST(this.arounds.bank);
+    },
+    isMart() {
+      this.convObj.subway = false;
+      this.convObj.bank = false;
+      this.convObj.mart = true;
+      this.convObj.convenience = false;
+      this.convObj.cafe = false;
+      this.SET_MARKER_LIST(this.arounds.mart);
+    },
+    isConvinience() {
+      this.convObj.subway = false;
+      this.convObj.bank = false;
+      this.convObj.mart = false;
+      this.convObj.convenience = true;
+      this.convObj.cafe = false;
+      this.SET_MARKER_LIST(this.arounds.convenience);
+    },
+    isCafe() {
+      this.convObj.subway = false;
+      this.convObj.bank = false;
+      this.convObj.mart = false;
+      this.convObj.convenience = false;
+      this.convObj.cafe = true;
+      this.SET_MARKER_LIST(this.arounds.cafe);
+    },
+    isKindergarden() {
+      this.schoolObj.kindergarden = true;
+      this.schoolObj.elementary = false;
+      this.schoolObj.middle = false;
+      this.schoolObj.high = false;
+      this.SET_MARKER_LIST(this.arounds.kindergarden);
+    },
+    isElementary() {
+      this.schoolObj.kindergarden = false;
+      this.schoolObj.elementary = true;
+      this.schoolObj.middle = false;
+      this.schoolObj.high = false;
+      this.SET_MARKER_LIST(this.arounds.ElementarySchool);
+    },
+    isMiddle() {
+      this.schoolObj.kindergarden = false;
+      this.schoolObj.elementary = false;
+      this.schoolObj.middle = true;
+      this.schoolObj.high = false;
+      this.SET_MARKER_LIST(this.arounds.MiddleSchool);
+    },
+    isHigh() {
+      this.schoolObj.kindergarden = false;
+      this.schoolObj.elementary = false;
+      this.schoolObj.middle = false;
+      this.schoolObj.high = true;
+      this.SET_MARKER_LIST(this.arounds.HighSchool);
+    },
+    isPublic() {
+      this.securityObj.cctv = false;
+      this.securityObj.public = true;
+      this.SET_MARKER_LIST(this.arounds.public);
+    },
+    isCctv() {
+      this.securityObj.cctv = true;
+      this.securityObj.public = false;
+      // this.SET_MARKER_LIST(this.arounds.public);
+    },
     numberToKorean(number) {
       var inputNumber = number < 0 ? false : number;
       var unitWords = ["", "만", "억", "조", "경"];
@@ -238,7 +493,7 @@ a {
   margin-right: 0;
 }
 
-.tab-menu-item a {
+.tab-menu-item {
   display: block;
   padding: 16px 20px;
 }
@@ -322,6 +577,10 @@ a {
   margin-bottom: 4px;
 }
 
+.option-detail .selected dt {
+  background-color: rgb(241, 245, 7);
+}
+
 .option {
   display: flex;
   flex-direction: column;
@@ -348,7 +607,11 @@ a {
   font-size: 30px;
   font-weight: 600;
   line-height: 1.6666666667;
+  width: 50px;
+  height: 50px;
   color: #8492a6;
+  background-color: #e1e1e1;
+  border-radius: 50%;
 }
 
 .option-detail dd {

@@ -16,4 +16,7 @@ function houseList(params, success, fail) {
   api.get(`map/apt`, { params: params }).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, houseList };
+function aroundList(params, success, fail) {
+  api.get(`map/around`, { params: params }).then(success).catch(fail);
+}
+export { sidoList, gugunList, houseList, aroundList };
