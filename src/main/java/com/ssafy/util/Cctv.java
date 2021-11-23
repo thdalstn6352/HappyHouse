@@ -25,7 +25,6 @@ public class Cctv {
 		while ((current = in.readLine()) != null) {
 			urlString.append(current);
 		}
-		
 		return urlString.toString();
 	}
 }
