@@ -39,7 +39,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .answered-true {
   display: inline-block;
   font-size: 18px;

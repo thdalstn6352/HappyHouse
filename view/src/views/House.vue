@@ -3,39 +3,12 @@
     <h3 class="underline-orange">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
-    <b-row>
-      <b-col>
-        <house-search-bar></house-search-bar>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col cols="4" align="left">
-        <house-list />
-      </b-col>
-      <b-col cols="8">
-        <!-- <house-detail /> -->
-        <!-- <house-map /> -->
-        <house-map-test />
-      </b-col>
-    </b-row>
+    <router-view></router-view>
   </b-container>
 </template>
 <script>
-import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
-import HouseList from "@/components/house/HouseList.vue";
-// import HouseDetail from "@/components/house/HouseDetail.vue";
-// import HouseMap from "@/components/house/HouseMap.vue";
-import HouseMapTest from "@/components/house/HouseMapTest.vue";
-
 export default {
   name: "House",
-  components: {
-    HouseSearchBar,
-    HouseList,
-    // HouseDetail,
-    // HouseMap,
-    HouseMapTest,
-  },
 };
 </script>
 <style scoped>

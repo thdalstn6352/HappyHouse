@@ -2,14 +2,6 @@
 <template>
   <div>
     <div id="map"></div>
-    <div class="button-group">
-      <button @click="changeSize(0)">Hide</button>
-      <button @click="changeSize(600)">show</button>
-      <!-- <button @click="displayMarker()">marker set 1</button> -->
-      <button @click="displayMarker()">marker set 2</button>
-      <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow()">infowindow</button>
-    </div>
   </div>
 </template>
 
@@ -22,10 +14,15 @@ export default {
   data() {
     return {
       map: null,
-
       markers: [],
       infowindow: null,
+      // isChange: false;
     };
+  },
+  watch: {
+    houses: function () {
+      this.displayMarker();
+    },
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -46,16 +43,6 @@ export default {
         level: 5,
       };
       this.map = new kakao.maps.Map(container, options);
-      // container.style.width = `100vw`;
-      // container.style.height = `100%`;
-      // this.map.relayout();
-      console.log(this.houses);
-    },
-    changeSize(size) {
-      const container = document.getElementById("map");
-      container.style.width = `${size}px`;
-      container.style.height = `${size}px`;
-      this.map.relayout();
     },
     displayMarker() {
       if (this.markers.length > 0) {
@@ -69,7 +56,6 @@ export default {
         let position = new kakao.maps.LatLng(house.y, house.x);
         positions.push(position);
       });
-      console.log(positions);
 
       if (positions.length > 0) {
         this.markers = positions.map(
@@ -85,7 +71,6 @@ export default {
           (bounds, latlng) => bounds.extend(latlng),
           new kakao.maps.LatLngBounds()
         );
-        console.log(bounds);
         this.map.setBounds(bounds);
       }
     },

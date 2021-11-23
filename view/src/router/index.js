@@ -16,6 +16,8 @@ import BoardView from "@/components/board/BoardView.vue";
 import BoardUpdate from "@/components/board/BoardUpdate.vue";
 
 import House from "@/views/House.vue";
+import HouseDetail from "@/components/house/HouseDetail.vue";
+import HouseView from "@/components/house/HouseView.vue";
 import store from "@/store/index.js";
 
 import Qna from "@/views/QnA.vue";
@@ -117,6 +119,19 @@ const routes = [
     path: "/house",
     name: "House",
     component: House,
+    redirect: "/house/view",
+    children: [
+      {
+        path: "view",
+        name: "HouseView",
+        component: HouseView,
+      },
+      {
+        path: "detail",
+        name: "HouseDetail",
+        component: HouseDetail,
+      },
+    ],
   },
   {
     path: "*",

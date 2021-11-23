@@ -222,7 +222,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .text-danger {
   color: red;
 }
