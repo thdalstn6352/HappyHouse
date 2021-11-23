@@ -17,7 +17,6 @@ public interface HouseMapService {
 	String getCafe(String x, String y)throws Exception;
 	String getBank(String x, String y)throws Exception;
 	String getPublic(String x, String y)throws Exception;
-	String getPolice(String x, String y)throws Exception;
 	String getCctv(String x, String y)throws Exception;
 	String getKid(String x, String y)throws Exception;
 	String getSchool(String x, String y)throws Exception;

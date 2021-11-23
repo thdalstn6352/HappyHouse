@@ -194,7 +194,6 @@ public class HouseMapController {
 		ret.put("cafe", new JSONObject(houseMapService.getCafe(x, y)).getJSONArray("documents"));
 		ret.put("bank", new JSONObject(houseMapService.getBank(x, y)).getJSONArray("documents"));
 		ret.put("public", new JSONObject(houseMapService.getPublic(x, y)).getJSONArray("documents"));
-		ret.put("police", new JSONObject(houseMapService.getPolice(x, y)).getJSONArray("documents"));
 		ret.put("kindergarden", new JSONObject(houseMapService.getKid(x, y)).getJSONArray("documents"));
 		ret.put("school", new JSONObject(houseMapService.getSchool(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
