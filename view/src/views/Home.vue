@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center home">
+  <b-container class="bv-example-row mt-3 text-center home" fluid>
     <h3 class="underline-steelblue"><b-icon icon="house"></b-icon> SSAFY</h3>
     <b-row>
       <b-col></b-col>
@@ -39,6 +39,11 @@ export default {
 </script>
 
 <style scoped>
+/* .home {
+  background-image: url("../assets/apt.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
 .underline-steelblue {
   display: inline-block;
   background: linear-gradient(

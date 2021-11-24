@@ -15,7 +15,6 @@ export default {
     return {
       map: null,
       markerList: [],
-      // markers: [],
       infowindow: null,
     };
   },
@@ -66,81 +65,76 @@ export default {
         }
         this.markerList = [];
       }
-      // let MarkerImageSrc =
-      // "https://www.flaticon.com/premium-icon/metro-station_1183133";
-      // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-      // "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png";
       let positions = [];
 
       // eslint-disable-next-line prettier/prettier
       this.markers.forEach(marker => {
+        console.log(marker);
         let position = new kakao.maps.LatLng(marker.y, marker.x);
-        positions.push(position);
+        // let content = `<div>${marker.place_name}</div>`;
+        let content = `<div class="wrap">
+              <div class="info">
+                  <div class="title">
+                      ${marker.place_name}
+                  </div>
+                  <div class="body">
+                      <div class="desc">
+                          <div class="ellipsis">${marker.address_name}</div>
+                          <div class="jibun ellipsis">${marker.phone}</div>
+                      </div>
+                  </div>
+              </div>
+          </div>`;
+        positions.push([position, content]);
       });
       console.log(positions);
-      // this.createMarkers(positions, this.markerList, MarkerImageSrc);
-      this.createMarkers(positions, this.markerList);
-      this.setMarkers(this.markerList);
-    },
-    createMarkers(locations, list) {
-      for (var i = 0; i < locations.length; i++) {
-        // var imageSize = new kakao.maps.Size(24, 35);
+      for (let i = 0; i < positions.length; i++) {
+        // let marker = this.createMarker(positions[i]);
+        var marker = new kakao.maps.Marker({
+          position: positions[i][0],
+        });
 
-        // let marker = this.createMarker(locations[i], markerImage);
-        let marker = this.createMarker(locations[i]);
+        var infowindow = new kakao.maps.InfoWindow({
+          content: positions[i][1],
+        });
+        kakao.maps.event.addListener(
+          marker,
+          "mouseover",
+          this.makeOverListener(this.map, marker, infowindow)
+        );
+        kakao.maps.event.addListener(
+          marker,
+          "mouseout",
+          this.makeOutListener(infowindow)
+        );
 
-        // 생성된 마커를 커피숍 마커 배열에 추가합니다
-        list.push(marker);
+        // var overlay = new kakao.maps.CustomOverlay({
+        //   content: positions[i][1],
+        //   map: this.map,
+        //   position: positions[i][0],
+        // });
+
+        // kakao.maps.event.addListener(marker, "click", function () {
+        //   overlay.setMap(this.map);
+        // });
+
+        this.markerList.push(marker);
       }
-      console.log(list);
-    },
 
-    // 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
-    createMarker(position) {
-      var marker = new kakao.maps.Marker({
-        position: position,
-      });
-
-      return marker;
-    },
-    // createMarker(position, image) {
-    //   var marker = new kakao.maps.Marker({
-    //     position: position,
-    //     image: image,
-    //   });
-
-    //   return marker;
-    // },
-    setMarkers(markers) {
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(this.map);
+      for (let i = 0; i < this.markerList.length; i++) {
+        this.markerList[i].setMap(this.map);
       }
     },
-    // clearMarkers(markers) {
-    //   for (var i = 0; i < markers.length; i++) {
-    //     markers[i].setMap(null);
-    //   }
-    // },
-    // displayInfoWindow() {
-    //   if (this.infowindow && this.infowindow.getMap()) {
-    //     //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
-    //     this.map.setCenter(this.infowindow.getPosition());
-    //     return;
-    //   }
-
-    //   var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    //     iwPosition = new kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
-    //     iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-    //   this.infowindow = new kakao.maps.InfoWindow({
-    //     map: this.map, // 인포윈도우가 표시될 지도
-    //     position: iwPosition,
-    //     content: iwContent,
-    //     removable: iwRemoveable,
-    //   });
-
-    //   this.map.setCenter(iwPosition);
-    // },
+    makeOverListener(map, marker, infowindow) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    },
+    makeOutListener(infowindow) {
+      return function () {
+        infowindow.close();
+      };
+    },
   },
   computed: {
     ...mapState(houseStore, ["house", "markers"]),
@@ -161,5 +155,98 @@ export default {
 
 button {
   margin: 0 3px;
+}
+
+.wrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+}
+.wrap * {
+  padding: 0;
+  margin: 0;
+}
+.wrap .info {
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.wrap .info:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.info .title {
+  padding: 5px 0 0 10px;
+  height: 30px;
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+}
+.info .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+}
+.info .close:hover {
+  cursor: pointer;
+}
+.info .body {
+  position: relative;
+  overflow: hidden;
+}
+.info .desc {
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+}
+.desc .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.info .img {
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  border: 1px solid #ddd;
+  color: #888;
+  overflow: hidden;
+}
+.info:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.info .link {
+  color: #5085bb;
 }
 </style>
