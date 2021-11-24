@@ -6,11 +6,9 @@
         :data="addresses"
         v-model="addressSearch"
         size="lg"
-        placeholder="Type an address..."
+        :maxMatches="100"
+        placeholder="Search"
       >
-        <template slot="suggestion" slot-scope="{ data, htmlText }">
-          <span v-html="htmlText"></span>&nbsp;<small>{{ data.code }}</small>
-        </template>
       </vue-bootstrap-typeahead>
     </b-col>
     <b-col cols="3"> </b-col>
@@ -35,14 +33,17 @@ export default {
     async search(keyword) {
       const params = {
         keyword: keyword,
-        // DEAL_YMD: "202110",
       };
       await searchList(
         params,
         ({ data }) => {
           console.log(data);
-          // this.addresses.push(data);
-          this.addresses = ["Hihi", "hello"];
+          let arr = [];
+          for (let i = 0; i < data.length; i++) {
+            arr.push(data[i].sidoName + " " + data[i].gugunName);
+          }
+          this.addresses = arr;
+          // console.log(arr);
           console.log(this.addresses);
         },
         // eslint-disable-next-line prettier/prettier

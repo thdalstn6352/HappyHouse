@@ -58,8 +58,11 @@ public class HouseMapController {
 	@GetMapping("/search")
 	public ResponseEntity<List<SidoGugunCodeDto>> search(
 			@RequestParam("keyword") @ApiParam(value = "검색 키워드.", required = true) String keyword) throws Exception {
-
-		List<SidoGugunCodeDto> list = houseMapService.getGugunByKeyword(keyword);
+		List<SidoGugunCodeDto> list = null;
+		if(keyword.equals("")) {
+			return new ResponseEntity<List<SidoGugunCodeDto>>(list, HttpStatus.OK);
+		}
+		list = houseMapService.getGugunByKeyword(keyword);
 		for (int j = 0; j < list.size(); j++) {
 			SidoGugunCodeDto dto = list.get(j);
 			dto.setSidoCode(dto.getGugunCode().substring(0, 2));
@@ -81,9 +84,18 @@ public class HouseMapController {
 
 		return new ResponseEntity<List<SidoGugunCodeDto>>(list, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "아파트리스트", notes = "시도 구군이름으로 아파트 리스트 반환.", response = List.class)
+	@GetMapping(value = "/selected", produces = "application/json;charset=UTF-8")
+	public ResponseEntity<String> selected(
+			@RequestParam("keyword") @ApiParam(value = "시도 구군 이름.", required = true) String address) throws Exception {
+		String gugun = houseMapService.getCode(address.split(" ")[1]);
+		return apt(gugun);
+	}
 
+	@ApiOperation(value = "아파트리스트", notes = "구군코드로 아파트 리스트 반환.", response = List.class)
 	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") String gugun) throws Exception {
+	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") @ApiParam(value = "구군 코드.", required = true)String gugun) throws Exception {
 
 		StringBuilder urlBuilder = new StringBuilder(
 				"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev");

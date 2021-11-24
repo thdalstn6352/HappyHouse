@@ -3,10 +3,7 @@
     <b-row>
       <b-col></b-col>
       <b-col cols="12">
-        <p>Vue + Bootstrap활용.</p>
-        <p>Bootstrap-vue는 버전 <b>4.5.3</b>을 권장합니다.</p>
-        <p><b>BoardList.vue</b>를 바꿔가면서 테스트하세요.</p>
-        <p>Bootstrap의 <b>table</b> 사용법을 익히게됩니다.</p>
+        <house-search-bar></house-search-bar>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -14,10 +11,14 @@
 </template>
 
 <script>
+import HouseSearchBar from "@/components/house/HouseSearchBar2.vue";
 export default {
   name: "Main",
   props: {
     msg: String,
+  },
+  components: {
+    HouseSearchBar,
   },
 };
 </script>

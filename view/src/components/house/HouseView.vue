@@ -16,7 +16,7 @@
   </b-container>
 </template>
 <script>
-import HouseSearchBar from "@/components/house/HouseSearchBar2.vue";
+import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseMap from "@/components/house/HouseMap.vue";
 

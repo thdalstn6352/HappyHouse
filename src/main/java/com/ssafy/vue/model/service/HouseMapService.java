@@ -15,6 +15,7 @@ public interface HouseMapService {
 	List<SidoGugunCodeDto> getSidoByKeyword(String keyword) throws Exception;
 	
 	String getAddress(String gugun) throws Exception;
+	String getCode(String address) throws Exception;
 	String getSubway(String x, String y)throws Exception;
 	String getCv(String x, String y)throws Exception;
 	String getCafe(String x, String y)throws Exception;

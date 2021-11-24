@@ -519,5 +519,10 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return sqlSession.getMapper(HouseMapMapper.class).getSidoByKeyword("%"+keyword+"%");
 	}
 
+	@Override
+	public String getCode(String address) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getCode(address);
+	}
+
 
 }
