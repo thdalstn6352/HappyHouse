@@ -1,15 +1,9 @@
 package com.ssafy.vue.controller;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -28,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.util.CalcDistance;
 import com.ssafy.vue.model.SidoGugunCodeDto;
 import com.ssafy.vue.model.service.HouseMapService;
 
@@ -65,14 +58,14 @@ public class HouseMapController {
 	@GetMapping("/search")
 	public ResponseEntity<List<SidoGugunCodeDto>> search(
 			@RequestParam("keyword") @ApiParam(value = "검색 키워드.", required = true) String keyword) throws Exception {
-		
+
 		List<SidoGugunCodeDto> list = houseMapService.getGugunByKeyword(keyword);
 		for (int j = 0; j < list.size(); j++) {
 			SidoGugunCodeDto dto = list.get(j);
 			dto.setSidoCode(dto.getGugunCode().substring(0, 2));
 			dto.setSidoName(houseMapService.getSidoByCode(dto.getSidoCode()));
 		}
-		
+
 		List<SidoGugunCodeDto> sido = houseMapService.getSidoByKeyword(keyword);
 		for (int j = 0; j < sido.size(); j++) {
 			SidoGugunCodeDto dto = sido.get(j);
@@ -85,8 +78,7 @@ public class HouseMapController {
 				list.add(dto2);
 			}
 		}
-		
-		
+
 		return new ResponseEntity<List<SidoGugunCodeDto>>(list, HttpStatus.OK);
 	}
 
@@ -99,8 +91,7 @@ public class HouseMapController {
 				+ "=PdIWX7uJ0xSSI9JZ95aZZauuxtk0z5MSUs1sUq6th8uytplflwZkegSbl4PSkIfWQH9ZQMEVPUI9LoEgksZq%2Fw%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(gugun, "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("202110", "UTF-8"));
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("200", "UTF-8"));
-
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("30", "UTF-8"));
 
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -136,42 +127,16 @@ public class HouseMapController {
 		}
 
 		for (int i = 0; i < items.length(); i++) {
-
+			JSONObject xy;
 			JSONObject item = items.getJSONObject(i);
 			StringBuilder sb = new StringBuilder();
 			String gugunName = houseMapService.getAddress(gugun);
 			sb.append(gugunName).append(" ");
-			sb.append(item.getString("법정동")).append(" ");
-			sb.append(item.get("지번").toString());
+			if (!item.optString("법정동").equals("") && !item.optString("지번").equals("")) {
+				sb.append(item.getString("법정동")).append(" ");
+				sb.append(item.get("지번").toString());
 
-//			System.out.println(sb.toString());
-
-			String address = URLEncoder.encode(sb.toString(), "UTF-8");
-			obj = new URL(GEOCODE_URL + address);
-			conn = (HttpURLConnection) obj.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Authorization", GEOCODE_USER_INFO);
-			conn.setRequestProperty("content-type", "application/json");
-			conn.setDoOutput(true);
-			conn.setUseCaches(false);
-			conn.setDefaultUseCaches(false);
-			Charset charset = Charset.forName("UTF-8");
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			JSONObject xy = new JSONObject(response.toString());
-
-			if (xy.getJSONObject("meta").get("total_count").equals((Integer) 0)) {
-				StringBuilder ss = new StringBuilder();
-				ss.append(gugunName).append(" ");
-				ss.append(item.getString("도로명")).append(" ");
-				ss.append(item.getString("도로명건물본번호코드")).append(" ");
-				ss.append(item.getString("도로명건물부번호코드"));
-
-				address = URLEncoder.encode(ss.toString(), "UTF-8");
+				String address = URLEncoder.encode(sb.toString(), "UTF-8");
 				obj = new URL(GEOCODE_URL + address);
 				conn = (HttpURLConnection) obj.openConnection();
 				conn.setRequestMethod("GET");
@@ -180,18 +145,50 @@ public class HouseMapController {
 				conn.setDoOutput(true);
 				conn.setUseCaches(false);
 				conn.setDefaultUseCaches(false);
-				charset = Charset.forName("UTF-8");
-				in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+				Charset charset = Charset.forName("UTF-8");
+				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+				xy = new JSONObject(response.toString());
+				System.out.println(xy.toString());
+				if(xy.getJSONArray("documents").optJSONObject(0) != null) {
+					item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
+					item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
+				}
+
+			}else if(!item.optString("도로명").equals("") && !item.optString("도로명건물본번호코드").equals("") && !item.optString("도로명건물부번호코드").equals("")){
+				sb.append(item.getString("도로명")).append(" ");
+				sb.append(item.getString("도로명건물본번호코드")).append(" ");
+				sb.append(item.getString("도로명건물부번호코드"));
+
+				String address = URLEncoder.encode(sb.toString(), "UTF-8");
+				obj = new URL(GEOCODE_URL + address);
+				conn = (HttpURLConnection) obj.openConnection();
+				conn.setRequestMethod("GET");
+				conn.setRequestProperty("Authorization", GEOCODE_USER_INFO);
+				conn.setRequestProperty("content-type", "application/json");
+				conn.setDoOutput(true);
+				conn.setUseCaches(false);
+				conn.setDefaultUseCaches(false);
+				Charset charset = Charset.forName("UTF-8");
+				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
 				String inputLine2;
 				StringBuffer response2 = new StringBuffer();
 				while ((inputLine2 = in.readLine()) != null) {
 					response2.append(inputLine2);
 				}
 				xy = new JSONObject(response2.toString());
+				System.out.println(xy.toString());
+				if(xy.getJSONArray("documents").optJSONObject(0) != null) {
+					item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
+					item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
+				}
+			}else {
+				continue;
 			}
-
-			item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
-			item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
 
 		}
 		rd.close();
