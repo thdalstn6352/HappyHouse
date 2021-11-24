@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -17,9 +17,9 @@ export default new Vuex.Store({
     houseStore,
     qnaStore,
   },
-  plugins: [
-    createPersistedState({
-      storage: sessionStorage,
-    }),
-  ],
+  // plugins: [
+  //   createPersistedState({
+  //     storage: sessionStorage,
+  //   }),
+  // ],
 });

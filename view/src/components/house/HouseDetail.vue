@@ -192,14 +192,26 @@
         <section v-else-if="this.security === true" class="option">
           <dl class="option-detail">
             <div class="option-detail-item"></div>
-            <div class="option-detail-item selected">
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.securityObj.cctv,
+              }"
+              @click="isCctv()"
+            >
               <dt><font-awesome-icon icon="video" /></dt>
               <dd>CCTV</dd>
             </div>
             <div class="option-detail-item"></div>
-            <div class="option-detail-item">
+            <div
+              class="option-detail-item"
+              v-bind:class="{
+                selected: this.securityObj.public,
+              }"
+              @click="isPublic()"
+            >
               <dt><font-awesome-icon icon="user-shield" /></dt>
-              <dd>경찰서</dd>
+              <dd>공공장소</dd>
             </div>
             <div class="option-detail-item"></div>
           </dl>
@@ -399,7 +411,7 @@ export default {
     isCctv() {
       this.securityObj.cctv = true;
       this.securityObj.public = false;
-      // this.SET_MARKER_LIST(this.arounds.public);
+      this.SET_MARKER_LIST(this.arounds.cctv);
     },
     numberToKorean(number) {
       var inputNumber = number < 0 ? false : number;

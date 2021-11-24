@@ -1,28 +1,12 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center home" fluid>
-    <h3 class="underline-steelblue"><b-icon icon="house"></b-icon> SSAFY</h3>
+  <b-container class="bv-example-row text-center home" fluid>
     <b-row>
       <b-col></b-col>
-      <b-col cols="10">
-        <b-jumbotron
-          bg-variant="muted"
-          text-variant="dark"
-          border-variant="dark"
-        >
-          <template #header>SSAFY Home</template>
-
-          <template #lead>
-            슬기로운 싸피 생활 (:6기편) <br />
-            열정 하~~~~앗 Six!!!!!
-          </template>
-
-          <hr class="my-4" />
-
-          <p>Vue + Bootstrap활용.</p>
-          <p>Bootstrap-vue는 버전 <b>4.5.3</b>을 권장합니다.</p>
-          <p><b>BoardList.vue</b>를 바꿔가면서 테스트하세요.</p>
-          <p>Bootstrap의 <b>table</b> 사용법을 익히게됩니다.</p>
-        </b-jumbotron>
+      <b-col cols="12">
+        <p>Vue + Bootstrap활용.</p>
+        <p>Bootstrap-vue는 버전 <b>4.5.3</b>을 권장합니다.</p>
+        <p><b>BoardList.vue</b>를 바꿔가면서 테스트하세요.</p>
+        <p>Bootstrap의 <b>table</b> 사용법을 익히게됩니다.</p>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -39,11 +23,14 @@ export default {
 </script>
 
 <style scoped>
-/* .home {
-  background-image: url("../assets/apt.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
+.home {
+  background-image: linear-gradient(
+    134deg,
+    rgb(19, 183, 207) -5%,
+    rgb(54, 91, 180) 56%,
+    rgb(54, 91, 180) 56%
+  );
+}
 .underline-steelblue {
   display: inline-block;
   background: linear-gradient(

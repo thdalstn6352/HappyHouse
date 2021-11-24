@@ -15,6 +15,8 @@ import {
   faUserGraduate,
   faVideo,
   faUserShield,
+  faArrowCircleLeft,
+  faArrowCircleRight,
   faLink,
   faRedo,
   faUndo,
@@ -37,7 +39,9 @@ library.add(
   faUniversity,
   faUserGraduate,
   faVideo,
-  faUserShield
+  faUserShield,
+  faArrowCircleLeft,
+  faArrowCircleRight
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

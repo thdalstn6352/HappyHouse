@@ -1,10 +1,6 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>공지사항</h3></b-alert>
-      </b-col>
-    </b-row>
+    <h3 class="underline-hotpink">공지사항</h3>
     <b-row v-if="userInfo !== null && userInfo.userid === `admin`" class="mb-1">
       <b-col class="text-right">
         <b-button variant="outline-primary" @click="moveWrite()"
@@ -15,10 +11,9 @@
     <b-row>
       <b-col v-if="articles.length">
         <b-table-simple hover responsive>
-          <b-thead head-variant="dark">
+          <b-thead head-variant="light">
             <b-tr>
-              <b-th>글번호</b-th>
-              <b-th>제목</b-th>
+              <b-th class="title">제목</b-th>
               <b-th>조회수</b-th>
               <b-th>작성자</b-th>
               <b-th>작성일</b-th>
@@ -30,6 +25,7 @@
               v-for="(article, index) in articles"
               :key="index"
               v-bind="article"
+              style="cursor: pointer"
             />
           </tbody>
         </b-table-simple>
@@ -100,5 +96,17 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: left;
+}
+.underline-hotpink {
+  display: inline-block;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(231, 27, 139, 0.3) 30%
+  );
+}
+
+.title {
+  width: 60%;
 }
 </style>

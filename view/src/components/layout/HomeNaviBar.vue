@@ -107,10 +107,13 @@ export default {
 
 <style scoped>
 .navbar {
-  box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
-  /* border-bottom: 1px solid rgb(231, 231, 231); */
+  background-image: linear-gradient(
+    134deg,
+    rgb(19, 183, 207) -5%,
+    rgb(54, 91, 180) 56%,
+    rgb(54, 91, 180) 56%
+  );
 }
-
 span {
   color: black;
 }

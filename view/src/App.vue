@@ -7,11 +7,13 @@
 
 <script>
 import NaviBar from "./components/layout/NaviBar.vue";
+// import HomeNaviBar from "./components/layout/HomeNaviBar.vue";
 
 export default {
   name: "App",
   components: {
     NaviBar,
+    // HomeNaviBar,
   },
 };
 </script>
@@ -22,7 +24,7 @@ a:hover {
   font-weight: bold;
 }
 
-a.router-link-exact-active {
-  color: #42b983;
+a .router-link-active {
+  color: rgb(50, 108, 249);
 }
 </style>

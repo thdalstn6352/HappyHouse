@@ -1,11 +1,7 @@
 <template>
-  <b-tr>
-    <b-td>{{ qnano }}</b-td>
-    <b-th class="text-left">
-      <router-link :to="{ name: 'QnaView', params: { qnano: qnano } }">{{
-        subject
-      }}</router-link>
-    </b-th>
+  <b-tr @click="moveView()">
+    <!-- <b-td>{{ qnano }}</b-td> -->
+    <b-td class="text-left">{{ subject }}</b-td>
     <b-td>{{ userid }}</b-td>
     <b-td>{{ regtime }}</b-td>
     <b-td v-if="answered === true">
@@ -18,9 +14,6 @@
 </template>
 
 <script>
-// import { mapState } from "vuex";
-// const memberStore = "memberStore";
-
 export default {
   name: "QnaListRow",
   props: {
@@ -35,6 +28,15 @@ export default {
     // changeDateFormat() {
     //   return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     // },
+  },
+  methods: {
+    moveView() {
+      this.$router.push({
+        name: "QnaView",
+        params: { qnano: this.qnano },
+      });
+      console.log("hihi");
+    },
   },
 };
 </script>

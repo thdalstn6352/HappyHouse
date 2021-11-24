@@ -1,10 +1,9 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>QnA 목록</h3></b-alert>
-      </b-col>
-    </b-row>
+    <h3 class="underline-purple">
+      <b-icon icon="question-circle"></b-icon> QnA 목록
+    </h3>
+
     <b-row class="mb-1">
       <b-col class="text-right">
         <b-button variant="outline-primary" @click="moveWrite()"
@@ -15,10 +14,10 @@
     <b-row>
       <b-col v-if="qnas.length">
         <b-table-simple hover responsive>
-          <b-thead head-variant="dark">
+          <b-thead head-variant="light">
             <b-tr>
-              <b-th>글번호</b-th>
-              <b-th>제목</b-th>
+              <!-- <b-th>질문번호</b-th> -->
+              <b-th class="title">제목</b-th>
               <b-th>작성자</b-th>
               <b-th>작성일</b-th>
               <b-th>답변여부</b-th>
@@ -30,6 +29,7 @@
               v-for="(qna, index) in qnas"
               :key="index"
               v-bind="qna"
+              style="cursor: pointer"
             />
           </tbody>
         </b-table-simple>
@@ -99,5 +99,17 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: left;
+}
+.underline-purple {
+  display: inline-block;
+  background: linear-gradient(
+    180deg,
+    rgba(183, 9, 226, 0) 70%,
+    rgba(230, 11, 193, 0.3) 30%
+  );
+}
+
+.title {
+  width: 50%;
 }
 </style>

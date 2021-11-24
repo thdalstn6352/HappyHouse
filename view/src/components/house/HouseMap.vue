@@ -53,8 +53,10 @@ export default {
       let positions = [];
       // eslint-disable-next-line prettier/prettier
       this.houses.forEach(house => {
-        let position = new kakao.maps.LatLng(house.y, house.x);
-        positions.push(position);
+        if (house.x && house.y) {
+          let position = new kakao.maps.LatLng(house.y, house.x);
+          positions.push(position);
+        }
       });
 
       if (positions.length > 0) {

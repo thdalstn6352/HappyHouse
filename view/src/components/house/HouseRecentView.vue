@@ -82,38 +82,42 @@
     </div>
     <div class="mt-3">
       <b-card-group deck>
-        <b-card
-          v-if="this.house[6]"
-          bg-variant="light"
-          class="text-center"
-          :header="this.house[6].name"
-          @click="moveDetailView(6)"
-        >
-          <b-card-text>면적 : {{ this.house[6].area }}㎡</b-card-text>
-          <b-card-text>최근 거래가 : {{ this.house[6].price }}원</b-card-text>
-        </b-card>
-
-        <b-card
-          v-if="this.house[7]"
-          bg-variant="light"
-          class="text-center"
-          :header="this.house[7].name"
-          @click="moveDetailView(7)"
-        >
-          <b-card-text>면적 : {{ this.house[7].area }}㎡</b-card-text>
-          <b-card-text>최근 거래가 : {{ this.house[7].price }}원</b-card-text>
-        </b-card>
-
-        <b-card
-          v-if="this.house[8]"
-          bg-variant="light"
-          class="text-center"
-          :header="this.house[8].name"
-          @click="moveDetailView(8)"
-        >
-          <b-card-text>면적 : {{ this.house[8].area }}㎡</b-card-text>
-          <b-card-text>최근 거래가 : {{ this.house[8].price }}원</b-card-text>
-        </b-card>
+        <b-col cols="4">
+          <b-card
+            v-if="this.house[6]"
+            bg-variant="light"
+            class="text-center"
+            :header="this.house[6].name"
+            @click="moveDetailView(6)"
+          >
+            <b-card-text>면적 : {{ this.house[6].area }}㎡</b-card-text>
+            <b-card-text>최근 거래가 : {{ this.house[6].price }}원</b-card-text>
+          </b-card>
+        </b-col>
+        <b-col cols="4">
+          <b-card
+            v-if="this.house[7]"
+            bg-variant="light"
+            class="text-center"
+            :header="this.house[7].name"
+            @click="moveDetailView(7)"
+          >
+            <b-card-text>면적 : {{ this.house[7].area }}㎡</b-card-text>
+            <b-card-text>최근 거래가 : {{ this.house[7].price }}원</b-card-text>
+          </b-card>
+        </b-col>
+        <b-col cols="4">
+          <b-card
+            v-if="this.house[8]"
+            bg-variant="light"
+            class="text-center"
+            :header="this.house[8].name"
+            @click="moveDetailView(8)"
+          >
+            <b-card-text>면적 : {{ this.house[8].area }}㎡</b-card-text>
+            <b-card-text>최근 거래가 : {{ this.house[8].price }}원</b-card-text>
+          </b-card>
+        </b-col>
       </b-card-group>
     </div>
   </div>
@@ -152,8 +156,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-header {
   height: 80px;
+}
+.card-body {
+  height: 130px;
 }
 </style>
