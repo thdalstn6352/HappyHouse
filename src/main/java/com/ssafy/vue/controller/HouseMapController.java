@@ -217,11 +217,11 @@ public class HouseMapController {
 		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
 
-//		if (!houseMapService.getCctv(x, y).equals("")) {
-//			ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
-//		} else {
-//			ret.put("cctv", new JSONArray("[]"));
-//		}
+		if (!houseMapService.getCctv(x, y).equals("")) {
+			ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
+		} else {
+			ret.put("cctv", new JSONArray("[]"));
+		}
 
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}
