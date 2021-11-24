@@ -161,6 +161,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 			if (!item.getString("latitude").equals("") && !item.getString("longitude").equals("") && CalcDistance.distance(Double.parseDouble(y), Double.parseDouble(x),
 					Double.parseDouble(item.getString("latitude")),
 					Double.parseDouble(item.getString("longitude"))) < 500.0) {
+				item.put("y", item.getString("latitude"));
+				item.put("x", item.getString("longitude"));
 				temp.put(item);
 			}
 		}
