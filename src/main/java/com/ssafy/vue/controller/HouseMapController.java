@@ -153,7 +153,6 @@ public class HouseMapController {
 					response.append(inputLine);
 				}
 				xy = new JSONObject(response.toString());
-				System.out.println(xy.toString());
 				if(xy.getJSONArray("documents").optJSONObject(0) != null) {
 					item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
 					item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
@@ -181,7 +180,6 @@ public class HouseMapController {
 					response2.append(inputLine2);
 				}
 				xy = new JSONObject(response2.toString());
-				System.out.println(xy.toString());
 				if(xy.getJSONArray("documents").optJSONObject(0) != null) {
 					item.put("x", xy.getJSONArray("documents").getJSONObject(0).get("x"));
 					item.put("y", xy.getJSONArray("documents").getJSONObject(0).get("y"));
