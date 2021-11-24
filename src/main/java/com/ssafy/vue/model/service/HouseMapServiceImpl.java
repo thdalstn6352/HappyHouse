@@ -158,7 +158,7 @@ public class HouseMapServiceImpl implements HouseMapService {
 		for (int i = 0; i < items.length(); i++) {
 			JSONObject item = (JSONObject) items.get(i);
 //			System.out.println(item.toString());
-			if (!item.getString("latitude").equals("") && CalcDistance.distance(Double.parseDouble(y), Double.parseDouble(x),
+			if (!item.getString("latitude").equals("") && !item.getString("longitude").equals("") && CalcDistance.distance(Double.parseDouble(y), Double.parseDouble(x),
 					Double.parseDouble(item.getString("latitude")),
 					Double.parseDouble(item.getString("longitude"))) < 500.0) {
 				temp.put(item);
