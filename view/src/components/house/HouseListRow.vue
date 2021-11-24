@@ -30,6 +30,7 @@ export default {
   name: "HouseListRow",
   data() {
     return {
+      price: "",
       isColor: false,
     };
   },
@@ -42,14 +43,56 @@ export default {
       this.isColor = flag;
     },
     selectHouse() {
+      const value = JSON.parse(localStorage.getItem("recent-view"));
+      this.price = this.numberToKorean(
+        parseInt(this.house.거래금액.replace(",", "")) * 10000
+      );
+      const val = {
+        name: this.house.아파트,
+        area: this.house.전용면적,
+        price: this.price,
+      };
+
+      if (value !== null) {
+        // value.push(val);
+        value.push(val);
+        console.log(value);
+        localStorage.setItem("recent-view", JSON.stringify(value));
+      } else {
+        let list = [];
+        list.push(val);
+        localStorage.setItem("recent-view", JSON.stringify(list));
+      }
       this.detailHouse(this.house);
-      console.log("hihi");
       this.moveDetail();
     },
     moveDetail() {
       this.$router.push({
         name: "HouseDetail",
       });
+    },
+    numberToKorean(number) {
+      var inputNumber = number < 0 ? false : number;
+      var unitWords = ["", "만", "억", "조", "경"];
+      var splitUnit = 10000;
+      var splitCount = unitWords.length;
+      var resultArray = [];
+      var resultString = "";
+
+      for (let i = 0; i < splitCount; i++) {
+        var unitResult =
+          (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        unitResult = Math.floor(unitResult);
+        if (unitResult > 0) {
+          resultArray[i] = unitResult;
+        }
+      }
+
+      for (let i = 0; i < resultArray.length; i++) {
+        if (!resultArray[i]) continue;
+        resultString = String(resultArray[i]) + unitWords[i] + resultString;
+      }
+      return resultString;
     },
   },
 };
