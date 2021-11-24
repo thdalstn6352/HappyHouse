@@ -23,6 +23,7 @@ public class BoardServiceImpl implements BoardService {
 		if(boardDto.getSubject() == null || boardDto.getContent() == null) {
 			throw new Exception();
 		}
+		boardDto.setArticleno(sqlSession.getMapper(BoardMapper.class).getMaxNo() + 1);
 		return sqlSession.getMapper(BoardMapper.class).writeArticle(boardDto) == 1;
 	}
 
@@ -70,7 +71,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public boolean deleteArticle(int articleno) throws Exception {
-		sqlSession.getMapper(BoardMapper.class).deleteMemo(articleno);
-		return sqlSession.getMapper(BoardMapper.class).deleteArticle(articleno) == 1;
+		int ret = sqlSession.getMapper(BoardMapper.class).deleteArticle(articleno);
+		int max = sqlSession.getMapper(BoardMapper.class).getMaxNo();
+		for (int i = articleno + 1; i <= max; i++) {
+			sqlSession.getMapper(BoardMapper.class).updateNo(i);
+		}
+		return ret == 1;
 	}
 }

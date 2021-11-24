@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.vue.model.mapper.BoardMapper">
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (userid, subject, content, hit, regtime)
-		values (#{userid}, #{subject}, #{content}, 0, now())
+		insert into board (articleno, userid, subject, content, hit, regtime)
+		values (#{articleno}, #{userid}, #{subject}, #{content}, 0, now())
 	</insert>
 	
 	<select id="listArticle" parameterType="map" resultType="boardDto">
@@ -68,6 +68,16 @@
 		delete from board
 		where articleno = #{articleno}
 	</delete>
+	
+	<select id="getMaxNo" resultType="int">
+		select max(articleno) from board
+	</select>
+	
+	<update id="updateNo" parameterType="int">
+		update board
+		set articleno = articleno - 1
+		where articleno = #{articleno}
+	</update>
 
 </mapper>
 
