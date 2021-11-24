@@ -15,7 +15,7 @@
 
 <script>
 import HouseListRow from "@/components/house/HouseListRow.vue";
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 const houseStore = "houseStore";
 
@@ -30,7 +30,20 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
+    ...mapState(houseStore, ["houses", "recents"]),
+  },
+  methods: {
+    ...mapMutations(houseStore, ["SET_RECENT_LIST"]),
+    // saveHouse() {
+    //   console.log(this.house);
+    //   // eslint-disable-next-line prettier/prettier
+    //   let index = this.recents.findIndex(i => i.isbn == this.house.일련번호);
+    //   if (index === -1) {
+    //     this.recents.push(this.house);
+    //     this.SET_RECENT_LIST(this.recents);
+    //     console.log(this.recents);
+    //   }
+    // },
   },
 };
 </script>

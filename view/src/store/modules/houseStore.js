@@ -10,6 +10,7 @@ const houseStore = {
     house: null,
     arounds: [],
     markers: [],
+    recents: [],
   },
 
   getters: {},
@@ -43,6 +44,9 @@ const houseStore = {
     },
     SET_MARKER_LIST: (state, data) => {
       state.markers = data;
+    },
+    SET_RECENT_LIST: (state, data) => {
+      state.recents = data;
     },
   },
 

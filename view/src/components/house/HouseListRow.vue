@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 const houseStore = "houseStore";
 
 export default {
@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["detailHouse"]),
+    ...mapMutations(houseStore, ["SET_RECENT_LIST"]),
     colorChange(flag) {
       this.isColor = flag;
     },
@@ -48,20 +49,27 @@ export default {
         parseInt(this.house.거래금액.replace(",", "")) * 10000
       );
       const val = {
+        isbn: this.house.일련번호,
         name: this.house.아파트,
         area: this.house.전용면적,
         price: this.price,
       };
 
       if (value !== null) {
-        // value.push(val);
-        value.push(val);
-        console.log(value);
-        localStorage.setItem("recent-view", JSON.stringify(value));
+        // eslint-disable-next-line prettier/prettier
+        let index = value.findIndex(i => i.isbn == this.house.일련번호);
+        if (index === -1) {
+          value.push(val);
+          localStorage.setItem("recent-view", JSON.stringify(value));
+          this.recents.push(this.house);
+          this.SET_RECENT_LIST(this.recents);
+        }
       } else {
         let list = [];
         list.push(val);
         localStorage.setItem("recent-view", JSON.stringify(list));
+        this.recents.push(this.house);
+        this.SET_RECENT_LIST(this.recents);
       }
       this.detailHouse(this.house);
       this.moveDetail();
@@ -94,6 +102,9 @@ export default {
       }
       return resultString;
     },
+  },
+  computed: {
+    ...mapState(houseStore, ["recents"]),
   },
 };
 </script>
