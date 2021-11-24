@@ -10,8 +10,11 @@ public interface HouseMapService {
 	List<SidoGugunCodeDto> getSido() throws Exception;
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
-	String getAddress(String gugun) throws Exception;
+	String getSidoByCode(String sidoCode) throws Exception;
+	List<SidoGugunCodeDto> getGugunByKeyword(String keyword) throws Exception;
+	List<SidoGugunCodeDto> getSidoByKeyword(String keyword) throws Exception;
 	
+	String getAddress(String gugun) throws Exception;
 	String getSubway(String x, String y)throws Exception;
 	String getCv(String x, String y)throws Exception;
 	String getCafe(String x, String y)throws Exception;

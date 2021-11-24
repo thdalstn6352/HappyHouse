@@ -61,6 +61,35 @@ public class HouseMapController {
 		return new ResponseEntity<List<SidoGugunCodeDto>>(houseMapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "검색 정보", notes = "검색정보를 반환한다.", response = List.class)
+	@GetMapping("/search")
+	public ResponseEntity<List<SidoGugunCodeDto>> search(
+			@RequestParam("keyword") @ApiParam(value = "검색 키워드.", required = true) String keyword) throws Exception {
+		
+		List<SidoGugunCodeDto> list = houseMapService.getGugunByKeyword(keyword);
+		for (int j = 0; j < list.size(); j++) {
+			SidoGugunCodeDto dto = list.get(j);
+			dto.setSidoCode(dto.getGugunCode().substring(0, 2));
+			dto.setSidoName(houseMapService.getSidoByCode(dto.getSidoCode()));
+		}
+		
+		List<SidoGugunCodeDto> sido = houseMapService.getSidoByKeyword(keyword);
+		for (int j = 0; j < sido.size(); j++) {
+			SidoGugunCodeDto dto = sido.get(j);
+			List<SidoGugunCodeDto> gugun = houseMapService.getGugunInSido((dto.getSidoCode()));
+			for (int k = 0; k < gugun.size(); k++) {
+				SidoGugunCodeDto dto2 = gugun.get(k);
+				System.out.println(dto2.getGugunName());
+				dto2.setSidoCode(dto2.getGugunCode().substring(0, 2));
+				dto2.setSidoName(houseMapService.getSidoByCode(dto2.getSidoCode()));
+				list.add(dto2);
+			}
+		}
+		
+		
+		return new ResponseEntity<List<SidoGugunCodeDto>>(list, HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/apt", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> apt(@RequestParam("LAWD_CD") String gugun) throws Exception {
 
@@ -70,6 +99,8 @@ public class HouseMapController {
 				+ "=PdIWX7uJ0xSSI9JZ95aZZauuxtk0z5MSUs1sUq6th8uytplflwZkegSbl4PSkIfWQH9ZQMEVPUI9LoEgksZq%2Fw%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(gugun, "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("202110", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("200", "UTF-8"));
+
 
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -186,11 +217,11 @@ public class HouseMapController {
 		ret.put("HighSchool", new JSONObject(houseMapService.getSchoolH(x, y)).getJSONArray("documents"));
 		ret.put("mart", new JSONObject(houseMapService.getMart(x, y)).getJSONArray("documents"));
 
-		if (!houseMapService.getCctv(x, y).equals("")) {
-			ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
-		}else {
-			ret.put("cctv", new JSONArray("[]"));
-		}
+//		if (!houseMapService.getCctv(x, y).equals("")) {
+//			ret.put("cctv", new JSONObject(houseMapService.getCctv(x, y)).getJSONArray("cctv"));
+//		} else {
+//			ret.put("cctv", new JSONArray("[]"));
+//		}
 
 		return new ResponseEntity<String>(ret.toString(), HttpStatus.OK);
 	}

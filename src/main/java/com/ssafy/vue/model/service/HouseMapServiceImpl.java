@@ -502,4 +502,20 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return response.toString();
 	}
 
+	@Override
+	public String getSidoByCode(String sidoCode) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getSidoByCode(sidoCode+"00000000");
+	}
+
+	@Override
+	public List<SidoGugunCodeDto> getGugunByKeyword(String keyword) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getGugunByKeyword("%"+keyword+"%");
+	}
+
+	@Override
+	public List<SidoGugunCodeDto> getSidoByKeyword(String keyword) throws Exception {
+		return sqlSession.getMapper(HouseMapMapper.class).getSidoByKeyword("%"+keyword+"%");
+	}
+
+
 }
