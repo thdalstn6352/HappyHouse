@@ -1,9 +1,9 @@
 <template>
   <b-tr @click="moveView()">
     <b-td class="text-left">{{ subject }}</b-td>
-    <b-td>{{ hit }}</b-td>
     <b-td>{{ userid }}</b-td>
     <b-td>{{ regtime }}</b-td>
+    <b-td>{{ hit }}</b-td>
   </b-tr>
 </template>
 

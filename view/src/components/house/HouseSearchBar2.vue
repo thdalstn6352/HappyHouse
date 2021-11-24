@@ -6,10 +6,12 @@
         :data="addresses"
         v-model="addressSearch"
         size="lg"
-        :serializer="(s) => s.text"
         placeholder="Type an address..."
-        @hit="selectedAddress = $event"
-      />
+      >
+        <template slot="suggestion" slot-scope="{ data, htmlText }">
+          <span v-html="htmlText"></span>&nbsp;<small>{{ data.code }}</small>
+        </template>
+      </vue-bootstrap-typeahead>
     </b-col>
     <b-col cols="3"> </b-col>
   </b-row>
@@ -30,17 +32,20 @@ export default {
     };
   },
   methods: {
-    search(keyword) {
+    async search(keyword) {
       const params = {
         keyword: keyword,
         // DEAL_YMD: "202110",
       };
-      searchList(
+      await searchList(
         params,
         ({ data }) => {
           console.log(data);
-          //   this.addresses.push(data[0].sidoName); 여기서 에러남
+          // this.addresses.push(data);
+          this.addresses = ["Hihi", "hello"];
+          console.log(this.addresses);
         },
+        // eslint-disable-next-line prettier/prettier
         (error) => {
           console.log(error);
         }
@@ -49,7 +54,6 @@ export default {
   },
   watch: {
     addressSearch: _.debounce(function (addr) {
-      //   console.log(addr);
       this.search(addr);
     }, 500),
   },
