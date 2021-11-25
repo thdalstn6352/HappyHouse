@@ -4,7 +4,11 @@
       <h2 class="p-3 mb-3 shadow bg-light">
         <mark class="orange">회원가입</mark>
       </h2>
-      <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
+      <b-card
+        class="text-center mt-3 signup-form"
+        style="max-width: 40rem"
+        align="left"
+      >
         <form id="memberform" class="text-left mb-3" method="post" action="">
           <input type="hidden" id="email" name="email" />
           <div class="form-group">
@@ -75,28 +79,33 @@
           <div class="form-group">
             <label for="emailid">이메일</label><br />
             <div id="email" class="custom-control-inline">
-              <input
-                type="text"
-                class="form-control"
-                id="emailid"
-                name="emailid"
-                size="25"
-                v-model="emailid"
-                required
-              />
-              @
-              <select
-                class="form-control"
-                id="emaildomain"
-                name="emaildomain"
-                v-model="emaildomain"
-              >
-                <option value="" selected disabled>선택하세요</option>
-                <option value="ssafy.com">싸피</option>
-                <option value="naver.com">네이버</option>
-                <option value="kakao.com">카카오</option>
-                <option value="google.com">구글</option>
-              </select>
+              <b-row class="email-form">
+                <b-col cols="6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="emailid"
+                    name="emailid"
+                    size="25"
+                    v-model="emailid"
+                    required
+                  />
+                </b-col>
+                <b-col cols="6" class="text-right">
+                  <select
+                    class="form-control"
+                    id="emaildomain"
+                    name="emaildomain"
+                    v-model="emaildomain"
+                  >
+                    <option value="" selected disabled>선택하세요</option>
+                    <option value="ssafy.com">싸피</option>
+                    <option value="naver.com">네이버</option>
+                    <option value="kakao.com">카카오</option>
+                    <option value="google.com">구글</option>
+                  </select>
+                </b-col>
+              </b-row>
             </div>
           </div>
 
@@ -241,5 +250,18 @@ export default {
 }
 .textPwd-dark {
   color: grey;
+}
+
+.signup-form {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.custom-control-inline {
+  width: 100%;
+  margin: 0;
+}
+.email-form {
+  width: 100%;
 }
 </style>

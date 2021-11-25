@@ -138,7 +138,7 @@
         <section v-if="this.conv === true" class="option">
           <dl class="option-detail">
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.convObj.subway,
               }"
@@ -148,7 +148,7 @@
               <dd>지하철역</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.convObj.convenience,
               }"
@@ -158,7 +158,7 @@
               <dd>편의점</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.convObj.mart,
               }"
@@ -168,7 +168,7 @@
               <dd>대형마트</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.convObj.cafe,
               }"
@@ -178,7 +178,7 @@
               <dd>카페</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.convObj.bank,
               }"
@@ -193,7 +193,7 @@
           <dl class="option-detail">
             <div class="option-detail-item"></div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.securityObj.cctv,
               }"
@@ -204,7 +204,7 @@
             </div>
             <div class="option-detail-item"></div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.securityObj.public,
               }"
@@ -219,7 +219,7 @@
         <section v-else-if="this.school === true" class="option">
           <dl class="option-detail">
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.schoolObj.kindergarden,
               }"
@@ -229,7 +229,7 @@
               <dd>유치원</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.schoolObj.elementary,
               }"
@@ -239,7 +239,7 @@
               <dd>초등학교</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.schoolObj.middle,
               }"
@@ -249,7 +249,7 @@
               <dd>중학교</dd>
             </div>
             <div
-              class="option-detail-item"
+              class="option-detail-item-bottom"
               v-bind:class="{
                 selected: this.schoolObj.high,
               }"
@@ -306,6 +306,7 @@ export default {
     };
   },
   created() {
+    console.log(this.house);
     this.size = Math.floor(this.house.전용면적 * 0.3082);
     this.price = this.numberToKorean(
       parseInt(this.house.거래금액.replace(",", "")) * 10000
@@ -621,11 +622,14 @@ a {
   line-height: 1.6666666667;
   width: 50px;
   height: 50px;
-  color: #8492a6;
-  background-color: #e1e1e1;
+  /* color: #8492a6;
+  background-color: #e1e1e1; */
   border-radius: 50%;
 }
-
+.option-detail-item-bottom dt {
+  color: #8492a6;
+  background-color: #e1e1e1;
+}
 .option-detail dd {
   font-size: 13px;
   font-weight: 300;

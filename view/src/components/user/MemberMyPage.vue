@@ -1,65 +1,58 @@
 <template>
-  <b-container class="mt-4" v-if="userInfo">
+  <b-container class="mt-4">
     <b-row>
-      <b-col>
-        <b-alert variant="secondary" show><h3>내정보</h3></b-alert>
+      <b-col cols="3"></b-col>
+      <b-col cols="6">
+        <b-row>
+          <b-col class="title text-left mb-5 pb-3 pl-0">내정보 관리 </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="2" class="image">
+            <img class="profile-image" src="@/assets/cat.jpeg" />
+          </b-col>
+          <b-col cols="10" class="text-left id">
+            <dl>
+              <dt>아이디</dt>
+              <dd>{{ userInfo.userid }}</dd>
+            </dl>
+          </b-col>
+        </b-row>
+        <b-row class="mt-4 name">
+          <dl>
+            <dt>이름</dt>
+            <dd>{{ userInfo.username }}</dd>
+          </dl>
+        </b-row>
+        <b-row class="mt-4 date">
+          <dl>
+            <dt>생년월일</dt>
+            <dd>1996년 09월 27일</dd>
+          </dl>
+        </b-row>
+        <b-row class="mt-4 email">
+          <dl>
+            <dt>이메일</dt>
+            <dd>{{ userInfo.email }}</dd>
+          </dl>
+        </b-row>
+        <b-row class="mt-4 join-date">
+          <dl>
+            <dt>가입일</dt>
+            <dd>{{ userInfo.joindate }}</dd>
+          </dl>
+        </b-row>
       </b-col>
+      <b-col cols="3"></b-col>
     </b-row>
     <b-row>
-      <b-col></b-col>
-      <b-col cols="8">
-        <b-jumbotron>
-          <template #header>My Page</template>
-
-          <template #lead> 내 정보 확인페이지입니다. </template>
-
-          <hr class="my-4" />
-
-          <b-container class="mt-4">
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">아이디</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.userid }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">이름</b-col
-              ><b-col cols="4" align-self="start">{{
-                userInfo.username
-              }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">이메일</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.email }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">가입일</b-col
-              ><b-col cols="4" align-self="start">{{
-                userInfo.joindate
-              }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-          </b-container>
-          <hr class="my-4" />
-
-          <b-button
-            variant="primary"
-            href="#"
-            class="mr-1"
-            @click="moveModifyMyInfo"
-            >정보수정</b-button
-          >
-          <b-button variant="danger" href="#" @click="moveDeleteMyInfo"
-            >회원탈퇴</b-button
-          >
-        </b-jumbotron>
+      <b-col cols="3"></b-col>
+      <b-col cols="6" class="text-right p-0 mt-3">
+        <b-button class="h-100 btn" @click="moveModifyMyInfo">수정</b-button>
+        <b-button variant="danger" class="ml-2" @click="moveDeleteMyInfo"
+          >회원탈퇴</b-button
+        >
       </b-col>
-      <b-col></b-col>
+      <b-col cols="3"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -74,7 +67,7 @@ export default {
   methods: {
     ...mapActions(memberStore, ["deleteInfo"]),
     moveModifyMyInfo() {
-      this.$router.replace({
+      this.$router.push({
         name: "Modify",
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
@@ -91,4 +84,60 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.image {
+  padding: 0;
+}
+.profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 40%;
+}
+
+.title {
+  font-size: 20px;
+  border-bottom: 1px solid black;
+}
+
+.name,
+.id,
+.date,
+.email,
+.join-date {
+  padding: 10px;
+  border-bottom: 1px solid rgb(236, 232, 232);
+}
+
+.name dt,
+.id dt,
+.date dt,
+.email dt,
+.join-date dt {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: rgb(85, 83, 83);
+}
+
+.name dl,
+.name dd,
+.id dl,
+.id dd,
+.date dl,
+.date dd,
+.email dl,
+.email dd,
+.join-date dl,
+.join-date dd {
+  margin-bottom: 0;
+}
+
+.btn.btn-secondary {
+  border: none;
+  background-color: rgb(18, 184, 134);
+}
+.btn.btn-secondary:hover {
+  background-color: rgb(58, 238, 127);
+}
+</style>

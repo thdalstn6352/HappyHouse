@@ -1,26 +1,4 @@
 <template>
-  <!-- <b-row v-if="this.modifyComment != null" class="mb-3 mt-2">
-    <b-col cols="10">
-      <b-form-textarea
-        id="comment"
-        placeholder="댓글을 작성하세요"
-        v-model="modifyComment.content"
-        rows="4"
-      ></b-form-textarea>
-    </b-col>
-    <b-col>
-      <b-button variant="outline-info" class="mr-2 h-100" @click="modComment"
-        >수정</b-button
-      >
-      <b-button
-        variant="outline-danger"
-        class="h-100"
-        @click="updateCommentCancel"
-        >취소</b-button
-      >
-    </b-col>
-  </b-row> -->
-
   <b-row class="mb-3 mt-2">
     <b-col cols="12">
       <b-form-textarea

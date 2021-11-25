@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-import Favorite from "@/views/HouseFavorite.vue";
 
 import Member from "@/views/Member.vue";
 import MemberLogin from "@/components/user/MemberLogin.vue";
@@ -18,8 +17,6 @@ import BoardUpdate from "@/components/board/BoardUpdate.vue";
 import House from "@/views/House.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
 import HouseView from "@/components/house/HouseView.vue";
-import RecentView from "@/components/house/HouseRecentView.vue";
-import WatchList from "@/components/house/WatchList.vue";
 
 import store from "@/store/index.js";
 
@@ -53,24 +50,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/favorite",
-    name: "Favorite",
-    component: Favorite,
-    redirect: "/favorite/recentview",
-    children: [
-      {
-        path: "recentview",
-        name: "RecentView",
-        component: RecentView,
-      },
-      {
-        path: "watchlist",
-        name: "WatchList",
-        component: WatchList,
-      },
-    ],
   },
   {
     path: "/user",

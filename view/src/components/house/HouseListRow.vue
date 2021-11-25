@@ -81,6 +81,7 @@ export default {
       }
       console.log(this.recents);
       this.detailHouse(this.house);
+      console.log("error?");
       this.moveDetail();
     },
     moveDetail() {
