@@ -90,7 +90,8 @@ public class HouseMapController {
 	public ResponseEntity<String> selected(
 			@RequestParam("keyword") @ApiParam(value = "시도 구군 이름.", required = true) String address) throws Exception {
 		String gugun = houseMapService.getCode(address.split(" ")[1]);
-		return apt(gugun);
+//		return apt(gugun);
+		return new ResponseEntity<String>(gugun, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "아파트리스트", notes = "구군코드로 아파트 리스트 반환.", response = List.class)
