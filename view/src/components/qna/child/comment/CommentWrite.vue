@@ -1,5 +1,5 @@
 <template>
-  <b-row v-if="this.modifyComment != null" class="mb-3 mt-2">
+  <!-- <b-row v-if="this.modifyComment != null" class="mb-3 mt-2">
     <b-col cols="10">
       <b-form-textarea
         id="comment"
@@ -19,9 +19,9 @@
         >취소</b-button
       >
     </b-col>
-  </b-row>
+  </b-row> -->
 
-  <b-row v-else class="mb-3 mt-2">
+  <b-row class="mb-3 mt-2">
     <b-col cols="12">
       <b-form-textarea
         id="comment"

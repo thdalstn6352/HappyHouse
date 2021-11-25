@@ -1,18 +1,22 @@
 <template>
   <b-row class="mt-4 mb-4">
-    <b-col cols="3"> </b-col>
-    <b-col cols="6">
+    <b-col cols="1"> </b-col>
+    <b-col cols="10">
+      <b-row class="pl-3 title">
+        <span class="text-left">어떤 지역의 거래를 보고 싶으신가요?</span>
+      </b-row>
       <vue-bootstrap-typeahead
         :data="addresses"
         v-model="addressSearch"
         size="lg"
         :maxMatches="100"
-        placeholder="Search"
+        placeholder="지역 또는 구 이름을 입력하세요."
         @hit="selectedAddress = $event"
+        class="h-100 mb-5"
       >
       </vue-bootstrap-typeahead>
+      <b-col cols="1"></b-col>
     </b-col>
-    <b-col cols="3"> </b-col>
   </b-row>
 </template>
 
@@ -80,4 +84,13 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.title {
+  margin: 80px 0px;
+}
+.title span {
+  font-size: 40px;
+  color: white;
+  font-weight: 300;
+}
+</style>

@@ -1,5 +1,6 @@
 <template>
   <b-container class="bv-example-row mt-3 text-center">
+    <navi-bar />
     <h3 class="underline-steelblue">
       <b-icon icon="person-lines-fill"></b-icon> Member Service
     </h3>
@@ -8,8 +9,12 @@
 </template>
 
 <script>
+import NaviBar from "@/components/layout/NaviBar.vue";
 export default {
   name: "Member",
+  components: {
+    NaviBar,
+  },
 };
 </script>
 

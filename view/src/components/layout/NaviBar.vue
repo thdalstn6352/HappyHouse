@@ -14,7 +14,7 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse id="nav-collapse" is-nav class="nav">
         <b-navbar-nav class="ml-auto ml-auto">
           <b-nav-item href="#"
             ><router-link :to="{ name: 'Board' }" class="link"
@@ -22,12 +22,7 @@
               공지사항</router-link
             ></b-nav-item
           >
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'Favorite' }" class="link"
-              ><b-icon icon="bookmark-star" font-scale="1"></b-icon>
-              관심목록</router-link
-            ></b-nav-item
-          >
+
           <b-nav-item href="#"
             ><router-link :to="{ name: 'House' }" class="link"
               ><b-icon icon="house" font-scale="1"></b-icon>
@@ -107,30 +102,34 @@ export default {
 
 <style scoped>
 .navbar {
-  box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
+  box-shadow: 0px 8px 8px -8px rgb(0 0 0 / 8%);
   /* border-bottom: 1px solid rgb(231, 231, 231); */
 }
-
-span {
+* {
   color: black;
 }
-a .navbar-dark .navbar-nav .nav-link {
-  color: black;
-}
-
-.nav-item {
-  color: black;
-}
-/* .navbar-dark .navbar-nav .nav-link:hover {
+/* span {
   color: black;
 } */
+/* a .navbar-dark .navbar-nav .nav-link,
+span,
+.nav-item,
+a,
+svg {
+  color: black;
+} */
+
+/* .nav-item {
+  color: black;
+}
+
 a {
   color: rgb(34, 34, 34);
 }
 
 svg {
   color: black;
-}
+} */
 
 .navbar-toggler {
   background-color: #eeeeee;

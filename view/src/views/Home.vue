@@ -1,17 +1,21 @@
 <template>
-  <b-container class="bv-example-row text-center home" fluid>
-    <b-row>
-      <b-col></b-col>
+  <b-container class="bv-example-row text-center" fluid>
+    <div class="home">
+      <navi-bar />
       <b-col cols="12">
         <house-search-bar></house-search-bar>
       </b-col>
-      <b-col></b-col>
-    </b-row>
+    </div>
+    <b-col cols="12">
+      <house-recent-view></house-recent-view>
+    </b-col>
   </b-container>
 </template>
 
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar2.vue";
+import NaviBar from "@/components/layout/NaviBar.vue";
+import HouseRecentView from "@/components/house/HouseRecentView.vue";
 export default {
   name: "Main",
   props: {
@@ -19,6 +23,8 @@ export default {
   },
   components: {
     HouseSearchBar,
+    HouseRecentView,
+    NaviBar,
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <b-container fluid class="bv-example-row mt-3 text-center">
+    <navi-bar />
     <h3 class="underline-orange">
       <b-icon icon="house-fill"></b-icon> House Service
     </h3>
@@ -7,8 +8,12 @@
   </b-container>
 </template>
 <script>
+import NaviBar from "@/components/layout/NaviBar.vue";
 export default {
   name: "House",
+  components: {
+    NaviBar,
+  },
 };
 </script>
 <style scoped>

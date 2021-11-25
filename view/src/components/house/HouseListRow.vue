@@ -48,17 +48,25 @@ export default {
       this.price = this.numberToKorean(
         parseInt(this.house.거래금액.replace(",", "")) * 10000
       );
+      const address = this.house.법정동 + " " + this.house.지번 + "번지";
+      const recent_trade = `${this.house.년}년 ${this.house.월}월 ${this.house.일}일`;
       const val = {
         isbn: this.house.일련번호,
         name: this.house.아파트,
         area: this.house.전용면적,
+        address: address,
+        floor: this.house.층,
+        recent_trade: recent_trade,
         price: this.price,
       };
 
       if (value !== null) {
-        // eslint-disable-next-line prettier/prettier
-        let index = value.findIndex(i => i.isbn == this.house.일련번호);
+        let index = value.findIndex((i) => i.isbn == this.house.일련번호);
         if (index === -1) {
+          if (value.length === 4) {
+            value.shift();
+            this.recents.shift();
+          }
           value.push(val);
           localStorage.setItem("recent-view", JSON.stringify(value));
           this.recents.push(this.house);
@@ -71,6 +79,7 @@ export default {
         this.recents.push(this.house);
         this.SET_RECENT_LIST(this.recents);
       }
+      console.log(this.recents);
       this.detailHouse(this.house);
       this.moveDetail();
     },

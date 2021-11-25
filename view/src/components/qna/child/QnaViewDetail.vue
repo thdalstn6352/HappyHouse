@@ -82,7 +82,7 @@
             <b-col>
               <div>
                 <div class="prev-next">
-                  <span>이전 공지사항</span>
+                  <span>이전 질문</span>
                 </div>
                 <div class="subject">
                   <span>{{ this.previousArticle.subject }}</span>
@@ -104,7 +104,7 @@
             <b-col cols="10" class="text-right">
               <div>
                 <div class="prev-next">
-                  <span>이후 공지사항</span>
+                  <span>이후 질문</span>
                 </div>
                 <div class="subject">
                   <span>{{ this.nextArticle.subject }}</span>

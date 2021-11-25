@@ -1,126 +1,107 @@
 <template>
-  <div v-if="recents && recents.length != 0">
-    <div>
+  <b-row class="mt-4 mb-4" v-if="recents && recents.length != 0">
+    <b-col cols="1"></b-col>
+    <b-col cols="10" class="text-center">
+      <b-row class="pl-3 title">
+        <span class="text-left header"><strong>최근</strong> 본 거래기록</span>
+      </b-row>
       <b-card-group deck>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-card
-            v-if="this.house[0]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[0].name"
+            class="text-center ml-0 mr-0"
+            img-src="https://cdn.pixabay.com/photo/2012/11/19/16/26/house-66627_1280.jpg"
             @click="moveDetailView(0)"
           >
-            <b-card-text>면적 : {{ this.house[0].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[0].price }}원</b-card-text>
+            <b-card-text class="card-content apt"
+              >{{ house[0].name }}아파트</b-card-text
+            >
+            <b-card-text class="card-content price"
+              >{{ house[0].price }}원
+              <span class="description"
+                >({{ house[0].recent_trade }} 기준)</span
+              ></b-card-text
+            >
+            <b-card-text class="card-content content"
+              ><p class="content-detail">
+                {{ house[0].floor }}층, {{ house[0].area }}㎡
+              </p>
+              <p>{{ house[0].address }}</p>
+            </b-card-text>
           </b-card>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-card
-            v-if="this.house[1]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[1].name"
+            class="text-center ml-0 mr-0"
+            img-src="https://cdn.pixabay.com/photo/2020/10/05/18/43/building-5630441_1280.jpg"
             @click="moveDetailView(1)"
           >
-            <b-card-text>면적 : {{ this.house[1].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[1].price }}원</b-card-text>
+            <b-card-text class="card-content apt"
+              >{{ house[1].name }}아파트</b-card-text
+            >
+            <b-card-text class="card-content price"
+              >{{ house[1].price }}원
+              <span class="description"
+                >({{ house[1].recent_trade }} 기준)</span
+              ></b-card-text
+            >
+            <b-card-text class="card-content content"
+              ><p class="content-detail">
+                {{ house[1].floor }}층, {{ house[1].area }}㎡
+              </p>
+              <p>{{ house[1].address }}</p>
+            </b-card-text>
           </b-card>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-card
-            v-if="this.house[2]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[2].name"
+            class="text-center ml-0 mr-0"
+            img-src="https://cdn.pixabay.com/photo/2016/11/21/15/09/apartments-1845884__340.jpg"
             @click="moveDetailView(2)"
           >
-            <b-card-text>면적 : {{ this.house[2].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[2].price }}원</b-card-text>
+            <b-card-text class="card-content apt"
+              >{{ house[2].name }}아파트</b-card-text
+            >
+            <b-card-text class="card-content price"
+              >{{ house[2].price }}원
+              <span class="description"
+                >({{ house[2].recent_trade }} 기준)</span
+              ></b-card-text
+            >
+            <b-card-text class="card-content content"
+              ><p class="content-detail">
+                {{ house[2].floor }}층, {{ house[2].area }}㎡
+              </p>
+              <p>{{ house[2].address }}</p>
+            </b-card-text>
           </b-card>
         </b-col>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-card
-            v-if="this.house[3]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[3].name"
+            class="text-center ml-0 mr-0"
+            img-src="https://cdn.pixabay.com/photo/2018/02/12/10/07/apartment-lounge-3147892_1280.jpg"
             @click="moveDetailView(3)"
           >
-            <b-card-text>면적 : {{ this.house[3].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[3].price }}원</b-card-text>
-          </b-card>
-        </b-col>
-        <b-col cols="4">
-          <b-card
-            v-if="this.house[4]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[4].name"
-            @click="moveDetailView(4)"
-          >
-            <b-card-text>면적 : {{ this.house[4].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[4].price }}원</b-card-text>
-          </b-card>
-        </b-col>
-        <b-col cols="4">
-          <b-card
-            v-if="this.house[5]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[5].name"
-            @click="moveDetailView(5)"
-          >
-            <b-card-text>면적 : {{ this.house[5].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[5].price }}원</b-card-text>
+            <b-card-text class="card-content apt"
+              >{{ house[3].name }}아파트</b-card-text
+            >
+            <b-card-text class="card-content price"
+              >{{ house[3].price }}원
+              <span class="description"
+                >({{ house[3].recent_trade }} 기준)</span
+              ></b-card-text
+            >
+            <b-card-text class="card-content content"
+              ><p class="content-detail">
+                {{ house[3].floor }}층, {{ house[3].area }}㎡
+              </p>
+              <p>{{ house[3].address }}</p>
+            </b-card-text>
           </b-card>
         </b-col>
       </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-col cols="4">
-          <b-card
-            v-if="this.house[6]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[6].name"
-            @click="moveDetailView(6)"
-          >
-            <b-card-text>면적 : {{ this.house[6].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[6].price }}원</b-card-text>
-          </b-card>
-        </b-col>
-        <b-col cols="4">
-          <b-card
-            v-if="this.house[7]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[7].name"
-            @click="moveDetailView(7)"
-          >
-            <b-card-text>면적 : {{ this.house[7].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[7].price }}원</b-card-text>
-          </b-card>
-        </b-col>
-        <b-col cols="4">
-          <b-card
-            v-if="this.house[8]"
-            bg-variant="light"
-            class="text-center"
-            :header="this.house[8].name"
-            @click="moveDetailView(8)"
-          >
-            <b-card-text>면적 : {{ this.house[8].area }}㎡</b-card-text>
-            <b-card-text>최근 거래가 : {{ this.house[8].price }}원</b-card-text>
-          </b-card>
-        </b-col>
-      </b-card-group>
-    </div>
-  </div>
+    </b-col>
+    <b-col cols="1"></b-col>
+  </b-row>
 </template>
 
 <script>
@@ -138,10 +119,6 @@ export default {
   },
   created() {
     this.house = JSON.parse(localStorage.getItem("recent-view"));
-    // const value = JSON.parse(localStorage.getItem("recent-view"));
-    // this.title = value[0].name;
-    // this.content = value[0].area;
-    console.log(this.house);
   },
   methods: {
     ...mapMutations(houseStore, ["SET_DETAIL_HOUSE"]),
@@ -157,10 +134,52 @@ export default {
 </script>
 
 <style scoped>
-.card-header {
-  height: 80px;
+.card-content {
+  text-align: left;
+  margin-bottom: 3px;
 }
+
 .card-body {
   height: 130px;
+  padding-top: 10px;
+  padding-left: 5px;
+  border: none;
+}
+.card-body .apt {
+  display: inline-block;
+  font-weight: 500;
+  color: rgb(34, 34, 34);
+  margin-bottom: 5px;
+  background: linear-gradient(
+    180deg,
+    rgba(183, 9, 226, 0) 70%,
+    rgba(230, 11, 193, 0.3) 30%
+  );
+}
+
+.card-body .price {
+  font-size: 20px;
+  font-weight: 800;
+  color: rgb(34, 34, 34);
+}
+.card-body .price .description {
+  font-size: 10px;
+  font-weight: 300;
+  color: rgb(34, 34, 34);
+}
+.card-body .content {
+  font-weight: 300;
+  font-size: 13px;
+}
+.card-body .content .content-detail {
+  margin-bottom: 0;
+}
+.title {
+  margin: 80px 0px 40px 0px;
+}
+.title .header {
+  font-size: 25px;
+  color: black;
+  font-weight: 400;
 }
 </style>
