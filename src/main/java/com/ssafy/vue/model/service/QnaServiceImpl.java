@@ -26,6 +26,7 @@ public class QnaServiceImpl implements QnaService {
 		if(qnaDto.getSubject() == null || qnaDto.getContent() == null) {
 			throw new Exception();
 		}
+		qnaDto.setQnano(sqlSession.getMapper(QnaMapper.class).getMaxNo() + 1);
 		return sqlSession.getMapper(QnaMapper.class).writeQna(qnaDto);
 	}
 
@@ -77,7 +78,12 @@ public class QnaServiceImpl implements QnaService {
 
 	@Override
 	public boolean deleteQna(int qnano) throws Exception {
-		return sqlSession.getMapper(QnaMapper.class).deleteQna(qnano);
+		int ret = sqlSession.getMapper(QnaMapper.class).deleteQna(qnano);
+		int max = sqlSession.getMapper(QnaMapper.class).getMaxNo();
+		for (int i = qnano + 1; i <= max; i++) {
+			sqlSession.getMapper(QnaMapper.class).updateNo(i);
+		}
+		return ret == 1;
 	}
 
 	@Override

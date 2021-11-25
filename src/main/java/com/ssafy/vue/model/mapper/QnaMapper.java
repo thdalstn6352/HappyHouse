@@ -23,7 +23,10 @@ public interface QnaMapper {
 	public void answeredTrue(int qnano) throws Exception;
 	public void answeredFalse(int qnano) throws Exception;
 	public boolean modifyQna(QnaDto qnaDto) throws Exception;
-	public boolean deleteQna(int qnano) throws Exception;
+	public int deleteQna(int qnano) throws Exception;
+	
+	public int getMaxNo() throws SQLException;
+	public void updateNo(int qnano) throws SQLException;
 	
 	public List<AnswerDto> listAnswer(int qnano) throws Exception;
 	public AnswerDto getAnswer(int answerno) throws Exception;

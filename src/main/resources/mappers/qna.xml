@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.vue.model.mapper.QnaMapper">
 
 	<insert id="writeQna" parameterType="qnaDto">
-		insert into qna (userid, subject, content, regtime)
-		values (#{userid}, #{subject}, #{content}, now())
+		insert into qna (qnano, userid, subject, content, regtime)
+		values (#{qnano}, #{userid}, #{subject}, #{content}, now())
 	</insert>
 	
 	<select id="list" parameterType="map" resultType="qnaDto">
@@ -95,7 +95,14 @@
 		where answerno = #{answerno}
 	</select>
 	
+	<select id="getMaxNo" resultType="int">
+		select max(qnano) from qna
+	</select>
 	
+	<update id="updateNo" parameterType="int">
+		update qna
+		set qnano = qnano - 1
+		where qnano = #{qnano}
+	</update>
 	
-
 </mapper>
