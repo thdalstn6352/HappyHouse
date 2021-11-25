@@ -24,22 +24,26 @@
             ref="content"
             v-model="articleForm.content"
             placeholder="내용 입력..."
-            rows="10"
-            max-rows="15"
+            rows="20"
+            max-rows="25"
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button
-          type="submit"
-          variant="primary"
-          class="m-1"
-          v-if="this.type === 'register'"
-          >글작성</b-button
-        >
-        <b-button type="submit" variant="primary" class="m-1" v-else
-          >글수정</b-button
-        >
-        <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
+        <b-col class="text-right pr-0">
+          <b-button
+            type="submit"
+            variant="outline-info"
+            class="m-1"
+            v-if="this.type === 'register'"
+            >글작성</b-button
+          >
+          <b-button type="submit" variant="outline-info" class="m-1" v-else
+            >글수정</b-button
+          >
+          <b-button type="reset" variant="outline-danger" class="m-1"
+            >초기화</b-button
+          >
+        </b-col>
       </b-form>
     </b-col>
   </b-row>

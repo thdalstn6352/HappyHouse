@@ -11,6 +11,7 @@ const memberStore = {
     userInfo: null,
     isJoin: false,
     isJoinError: false,
+    check: null,
     isId: false,
   },
   getters: {
@@ -41,12 +42,15 @@ const memberStore = {
     SET_IS_ID: (state, isId) => {
       state.isId = isId;
     },
+    SET_CHECK_ID: (state, id) => {
+      state.check = id;
+    },
   },
   actions: {
     async userConfirm({ commit }, user) {
       await login(
         user,
-        response => {
+        (response) => {
           console.log(response);
           if (response.data.message === "success") {
             let token = response.data["access-token"];
@@ -64,7 +68,7 @@ const memberStore = {
     async joinConfirm({ commit }, user) {
       await join(
         user,
-        response => {
+        (response) => {
           console.log(response);
           if (response.data === "success") {
             commit("SET_IS_JOIN", true);
@@ -81,7 +85,7 @@ const memberStore = {
     async modifyInfo({ commit }, user) {
       await modify(
         user,
-        response => {
+        (response) => {
           console.log(response);
           if (response.data === "success") {
             user.userpwd = null;
@@ -99,7 +103,7 @@ const memberStore = {
     async deleteInfo({ commit }, userid) {
       await remove(
         userid,
-        response => {
+        (response) => {
           console.log(response);
           if (response.data === "success") {
             commit("SET_USER_INFO", null);
@@ -112,12 +116,14 @@ const memberStore = {
     },
 
     async checkId({ commit }, userid) {
+      console.log("2");
       await checkId(
         userid,
-        response => {
-          console.log(response);
+        (response) => {
+          console.log("hihi");
           if (response.data != "") {
             commit("SET_IS_ID", true);
+            commit("SET_CHECK_ID", response);
           } else {
             commit("SET_IS_ID", false);
           }
@@ -130,7 +136,7 @@ const memberStore = {
       let decode_token = jwt_decode(token);
       findById(
         decode_token.userid,
-        response => {
+        (response) => {
           if (response.data.message === "success") {
             console.log(response);
             commit("SET_USER_INFO", response.data.userInfo);
@@ -138,7 +144,7 @@ const memberStore = {
             console.log("유저 정보 없음!!");
           }
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );

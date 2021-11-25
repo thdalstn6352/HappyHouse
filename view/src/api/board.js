@@ -10,8 +10,8 @@ async function writeArticle(article, success, fail) {
   await api.post(`/board`, article).then(success).catch(fail);
 }
 
-function getArticle(articleno, success, fail) {
-  api.get(`/board/${articleno}`).then(success).catch(fail);
+async function getArticle(articleno, success, fail) {
+  await api.get(`/board/${articleno}`).then(success).catch(fail);
 }
 
 async function modifyArticle(article, success, fail) {

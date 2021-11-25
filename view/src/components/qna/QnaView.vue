@@ -1,42 +1,25 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>QnA 보기</h3></b-alert>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-left">
-        <b-button variant="outline-primary" @click="listArticle">목록</b-button>
-      </b-col>
-      <b-col v-if="qna.userid === userInfo.userid" class="text-right">
-        <b-button
-          variant="outline-info"
-          size="sm"
-          @click="moveModifyArticle"
-          class="mr-2"
-          >글수정</b-button
-        >
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle"
-          >글삭제</b-button
-        >
-      </b-col>
-    </b-row>
     <qna-view-detail :qna="qna" />
-    <comment-write :qnano="this.qnano" />
-
-    <comment-write
-      v-if="isModifyShow && this.modifyComment != null"
-      :modifyComment="this.modifyComment"
-      @modify-comment-cancel="onModifyCommentCancel"
-    />
-
-    <comment
-      v-for="(comment, index) in comments"
-      :key="index"
-      :comment="comment"
-      @modify-comment="onModifyComment"
-    />
+    <div class="comments">
+      <b-row>
+        <b-col class="text-left">
+          <span class="comment-count">{{ comments.length }}개의 댓글</span>
+        </b-col>
+      </b-row>
+      <comment-write :qnano="this.qnano" />
+      <!-- <comment-write
+        v-if="isModifyShow && this.modifyComment != null"
+        :modifyComment="this.modifyComment"
+        @modify-comment-cancel="onModifyCommentCancel"
+      /> -->
+      <comment
+        v-for="(comment, index) in comments"
+        :key="index"
+        :comment="comment"
+        @modify-comment="onModifyComment"
+      />
+    </div>
   </b-container>
 </template>
 
@@ -82,23 +65,7 @@ export default {
     this.getComments(this.qnano);
   },
   methods: {
-    ...mapActions(qnaStore, ["getQna", "deleteQna", "getComments"]),
-    listArticle() {
-      this.$router.push({ name: "QnaList" });
-    },
-    moveModifyArticle() {
-      this.$router.replace({
-        name: "QnaUpdate",
-        params: { qnano: this.qnano },
-      });
-      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
-    },
-    async deleteArticle() {
-      if (confirm("정말로 삭제?")) {
-        await this.deleteQna(this.qnano);
-      }
-      this.listArticle();
-    },
+    ...mapActions(qnaStore, ["getQna", "getComments"]),
     onModifyComment(comment) {
       this.modifyComment = comment;
       this.isModifyShow = true;
@@ -111,4 +78,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.comments {
+  padding: 15px;
+}
+
+.comments .comment-count {
+  color: rgb(52, 58, 64);
+  font-weight: 600;
+}
+</style>

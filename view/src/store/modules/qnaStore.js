@@ -19,6 +19,7 @@ const qnaStore = {
     comments: [],
     comment: {},
     isSuccess: false,
+    isModify: 0,
     totalRows: 0,
     currentPage: Number,
   },
@@ -60,6 +61,9 @@ const qnaStore = {
     },
     setSuccess(state, payload) {
       state.isSuccess = payload;
+    },
+    setModifyFlag(state, payload) {
+      state.isModify = payload;
     },
   },
   actions: {

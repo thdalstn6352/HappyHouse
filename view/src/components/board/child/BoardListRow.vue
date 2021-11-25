@@ -1,8 +1,8 @@
 <template>
   <b-tr @click="moveView()">
     <b-td class="text-left">{{ subject }}</b-td>
-    <b-td>{{ userid }}</b-td>
-    <b-td>{{ regtime }}</b-td>
+    <b-td class="text-right">{{ userid }}</b-td>
+    <b-td class="text-right">{{ regtime }}</b-td>
     <b-td>{{ hit }}</b-td>
   </b-tr>
 </template>
@@ -25,7 +25,6 @@ export default {
         name: "BoardView",
         params: { articleno: this.articleno },
       });
-      console.log("hihi");
     },
   },
   computed: {

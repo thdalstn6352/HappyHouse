@@ -14,9 +14,9 @@
           <b-thead head-variant="light">
             <b-tr>
               <b-th class="title">제목</b-th>
-              <b-th class="writer">작성자</b-th>
-              <b-th class="regtime">작성일</b-th>
-              <b-th class="hit">조회수</b-th>
+              <b-th class="writer text-right">작성자</b-th>
+              <b-th class="regtime text-right">작성일</b-th>
+              <b-th class="count">조회수</b-th>
             </b-tr>
           </b-thead>
           <tbody>
@@ -107,12 +107,11 @@ export default {
 }
 
 .title {
-  width: 70%;
+  width: 60%;
 }
-
 .writer,
 .regtime,
-.hit {
+.count {
   width: 10%;
 }
 </style>

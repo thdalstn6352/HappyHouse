@@ -18,11 +18,9 @@ const boardStore = {
   },
   getters: {
     articles(state) {
-      // 도서목록
       return state.articles;
     },
     article(state) {
-      // 도서정보
       return state.article;
     },
     isSuccess(state) {
@@ -37,11 +35,9 @@ const boardStore = {
   },
   mutations: {
     setArticles(state, payload) {
-      // state의 books에 서버에서 얻어온 도서목록 세팅.
       state.articles = payload;
     },
     setArticle(state, payload) {
-      // state의 book에 서버에서 얻어온 도서정보 세팅.
       state.article = payload;
       state.isSuccess = true;
     },
@@ -71,7 +67,6 @@ const boardStore = {
       );
     },
     getArticle: ({ commit }, articleno) => {
-      console.log(articleno);
       getArticle(
         articleno,
         ({ data }) => {

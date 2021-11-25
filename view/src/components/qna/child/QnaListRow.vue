@@ -1,6 +1,5 @@
 <template>
   <b-tr @click="moveView()">
-    <!-- <b-td>{{ qnano }}</b-td> -->
     <b-td class="text-left">{{ subject }}</b-td>
     <b-td>{{ userid }}</b-td>
     <b-td>{{ regtime }}</b-td>
@@ -35,7 +34,6 @@ export default {
         name: "QnaView",
         params: { qnano: this.qnano },
       });
-      console.log("hihi");
     },
   },
 };

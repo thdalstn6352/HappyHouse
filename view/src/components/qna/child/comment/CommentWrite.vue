@@ -3,9 +3,9 @@
     <b-col cols="10">
       <b-form-textarea
         id="comment"
-        placeholder="답변 입력..."
+        placeholder="댓글을 작성하세요"
         v-model="modifyComment.content"
-        rows="2"
+        rows="4"
       ></b-form-textarea>
     </b-col>
     <b-col>
@@ -22,19 +22,19 @@
   </b-row>
 
   <b-row v-else class="mb-3 mt-2">
-    <b-col cols="11">
+    <b-col cols="12">
       <b-form-textarea
         id="comment"
-        placeholder="답변 입력..."
+        placeholder="댓글을 작성하세요"
         v-model="content"
-        rows="2"
+        rows="4"
+        class="mb-3"
+        no-resize
       ></b-form-textarea>
     </b-col>
-    <b-col
-      ><b-button variant="dark" class="h-100" @click="registComment"
-        >등록</b-button
-      ></b-col
-    >
+    <b-col cols="12" class="text-right">
+      <b-button class="h-100 btn" @click="registComment">댓글 작성</b-button>
+    </b-col>
   </b-row>
 </template>
 
@@ -83,3 +83,12 @@ export default {
   },
 };
 </script>
+<style scoped>
+.btn-secondary {
+  border: none;
+  background-color: rgb(18, 184, 134);
+}
+.btn-secondary:hover {
+  background-color: rgb(58, 238, 127);
+}
+</style>

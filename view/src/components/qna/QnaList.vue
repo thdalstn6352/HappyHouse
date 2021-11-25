@@ -16,11 +16,10 @@
         <b-table-simple hover responsive>
           <b-thead head-variant="light">
             <b-tr>
-              <!-- <b-th>질문번호</b-th> -->
               <b-th class="title">제목</b-th>
-              <b-th>작성자</b-th>
-              <b-th>작성일</b-th>
-              <b-th>답변여부</b-th>
+              <b-th class="writer text-right">작성자</b-th>
+              <b-th class="regtime text-right">작성일</b-th>
+              <b-th class="answered">답변여부</b-th>
             </b-tr>
           </b-thead>
           <tbody>
@@ -36,6 +35,7 @@
       </b-col>
       <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
+
     <b-pagination
       v-model="currentPage"
       :total-rows="totalCount"
@@ -75,12 +75,10 @@ export default {
   },
   created() {
     this.getQnas({ pg: this.currentPage, spp: 10 });
-    // this.$store.dispatch("getQnas");
   },
   methods: {
     ...mapActions(qnaStore, ["getQnas"]),
     pageClick: function (button, page) {
-      console.log(page);
       this.currentPage = page;
       this.getQnas({ pg: this.currentPage, spp: 10 });
     },
@@ -108,8 +106,12 @@ export default {
     rgba(230, 11, 193, 0.3) 30%
   );
 }
-
 .title {
-  width: 50%;
+  width: 60%;
+}
+.writer,
+.regtime,
+.answered {
+  width: 10%;
 }
 </style>
