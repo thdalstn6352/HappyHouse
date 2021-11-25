@@ -24,4 +24,16 @@ async function searchList(params, success, fail) {
   console.log(params);
   await api.get(`map/search`, { params: params }).then(success).catch(fail);
 }
-export { sidoList, gugunList, houseList, aroundList, searchList };
+
+async function searchGugunCode(params, success, fail) {
+  console.log(params);
+  await api.get(`map/selected`, { params: params }).then(success).catch(fail);
+}
+export {
+  sidoList,
+  gugunList,
+  houseList,
+  aroundList,
+  searchList,
+  searchGugunCode,
+};

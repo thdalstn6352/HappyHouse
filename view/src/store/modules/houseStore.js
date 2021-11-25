@@ -17,19 +17,19 @@ const houseStore = {
 
   mutations: {
     SET_SIDO_LIST: (state, sidos) => {
-      sidos.forEach(sido => {
+      sidos.forEach((sido) => {
         state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
       });
     },
     SET_GUGUN_LIST: (state, guguns) => {
-      guguns.forEach(gugun => {
+      guguns.forEach((gugun) => {
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
       });
     },
-    CLEAR_SIDO_LIST: state => {
+    CLEAR_SIDO_LIST: (state) => {
       state.sidos = [{ value: null, text: "선택하세요" }];
     },
-    CLEAR_GUGUN_LIST: state => {
+    CLEAR_GUGUN_LIST: (state) => {
       state.guguns = [{ value: null, text: "선택하세요" }];
     },
     SET_HOUSE_LIST: (state, houses) => {
@@ -57,7 +57,7 @@ const houseStore = {
           // console.log(data);
           commit("SET_SIDO_LIST", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -72,18 +72,12 @@ const houseStore = {
           // console.log(commit, response);
           commit("SET_GUGUN_LIST", data);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
     },
     getHouseList: ({ commit }, gugunCode) => {
-      // vue cli enviroment variables 검색
-      //.env.local file 생성.
-      // 반드시 VUE_APP으로 시작해야 한다.
-      // const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
-      // const SERVICE_KEY =
-      //   "PdIWX7uJ0xSSI9JZ95aZZauuxtk0z5MSUs1sUq6th8uytplflwZkegSbl4PSkIfWQH9ZQMEVPUI9LoEgksZq%2Fw%3D%3D";
       const params = {
         LAWD_CD: gugunCode,
         // DEAL_YMD: "202110",
@@ -91,12 +85,12 @@ const houseStore = {
       console.log(params);
       houseList(
         params,
-        response => {
+        (response) => {
           console.log(response);
           //   console.log(response.data.response.body.items.item);
           commit("SET_HOUSE_LIST", response.data.response.body.items.item);
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
@@ -113,7 +107,7 @@ const houseStore = {
             // console.log(commit, response);
             commit("SET_AROUND_LIST", data);
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );

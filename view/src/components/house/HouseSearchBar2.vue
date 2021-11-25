@@ -8,6 +8,7 @@
         size="lg"
         :maxMatches="100"
         placeholder="Search"
+        @hit="selectedAddress = $event"
       >
       </vue-bootstrap-typeahead>
     </b-col>
@@ -18,7 +19,9 @@
 <script>
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 import _ from "underscore";
-import { searchList } from "@/api/house.js";
+import { searchList, searchGugunCode } from "@/api/house.js";
+import { mapActions } from "vuex";
+const houseStore = "houseStore";
 
 export default {
   components: { VueBootstrapTypeahead },
@@ -30,6 +33,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(houseStore, ["getHouseList"]),
     async search(keyword) {
       const params = {
         keyword: keyword,
@@ -46,17 +50,33 @@ export default {
           // console.log(arr);
           console.log(this.addresses);
         },
-        // eslint-disable-next-line prettier/prettier
         (error) => {
           console.log(error);
         }
       );
+    },
+    async searchAptList() {
+      const params = {
+        keyword: this.selectedAddress,
+      };
+      await searchGugunCode(params, ({ data }) => {
+        this.getHouseList(data);
+        this.$router.push({
+          name: "HouseView",
+        });
+      }),
+        (error) => {
+          console.log(error);
+        };
     },
   },
   watch: {
     addressSearch: _.debounce(function (addr) {
       this.search(addr);
     }, 500),
+    selectedAddress: function () {
+      this.searchAptList();
+    },
   },
 };
 </script>
